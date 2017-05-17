@@ -47,7 +47,7 @@ jspm_packages
 #*.csv
 
 # Temp files
-tmp/
+#tmp/
 
 # Python and R temporary files
 __pycache__/

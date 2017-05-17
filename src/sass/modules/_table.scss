@@ -1,0 +1,68 @@
+.table-config-btn {
+  display: block;
+  right:0; 
+  position:absolute;
+  width: 20px;
+  text-align: right;
+  height: 20px;
+  z-index: 20;
+}
+.table-config-btn:hover {
+    cursor: pointer;
+}
+.bootstrap-table {
+  position: relative;
+  .card-view .title {
+    width: 50%;
+    vertical-align: top;
+  }
+  .card-view .value {
+    width: 50%;
+    display: inline-block;
+    text-align: left;
+  }
+}
+
+.bootstrap-table .fixed-table-toolbar {
+  height: 0;
+  overflow-y: hidden;
+  div.columns.columns-right.btn-group {
+    position: absolute;
+    right: 15px;
+  }
+}
+.bootstrap-table .fixed-table-toolbar .search {
+  padding: 10px;
+  margin: 0px;
+  line-height: normal;
+  input {
+    vertical-align: none;
+    //margin-left: 5px;
+  }
+}
+
+#table {
+  tbody {
+    tr {
+      border-bottom: 1px solid #dddddd;
+    },
+    td { white-space: pre-wrap }
+  }
+}
+
+table>thead>tr>th[data-field='duration'] {
+  min-width: 50px;
+}
+
+table>thead>tr>th {
+    vertical-align: middle !important;
+  }
+
+.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {
+  line-height: normal !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
+}
+table td {
+  text-align: center;
+}

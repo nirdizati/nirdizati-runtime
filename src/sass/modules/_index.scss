@@ -1,0 +1,168 @@
+.navbar {
+  height: 54px;
+  background-color: $navbarColor1;
+  color: white;
+  font-size: 24px;
+  font-family: roboto sans-serif;
+  margin: 0px !important;
+
+  .nav-left {
+    height: 100%;
+    float: left;
+  }
+  .nav-right {
+    float: right;
+  }
+
+  li {
+    padding: 9px;
+    display: table-cell;
+  }
+  .main-menu {
+    height: 100%;
+    color: $navbarColor1;
+    background-color: $navbarColor2;
+  }
+  //.main-menu:hover {
+  //  cursor: pointer;
+  //  color: $navbarColor2;
+  //  background-color: $navbarColor1;
+  //}
+  .login:hover {
+    color: $navbarColor1;
+    background-color: $navbarColor2;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    .reduce {
+      font-size: 18px;
+    }
+    .hide {
+      display: none !important;
+    }
+  }
+}
+
+.left-side {
+  width: 51px;
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+  background-color: $navbarColor1;
+}
+
+@media(max-width: 768px) {
+  //.left-side .remove {
+  //    display: none !important;
+  //}
+  .remove {
+    display: none !important;
+  }
+  .right-side {
+    margin-left: 0px !important;
+  }
+}
+
+.right-side {
+  margin-left: 51px;
+  margin-bottom: -9999px;
+  padding-bottom: 9999px;
+}
+
+$dashboardHeight: 158px;
+$dashboardContentHeight: 141px;
+
+.dashboard {
+  width: 100% !important;
+  height: $dashboardHeight;
+  background-color: white;
+}
+
+.block {
+  padding: 0;
+  height: 100%;
+}
+
+.container {
+  padding: 0;
+  margin: 0;
+}
+
+.row {
+  height:100%;
+  padding-top:5px;
+  padding-bottom:0;
+  padding-left:5px;
+  padding-right:5px;
+  margin: 0;
+}
+
+.parameter{
+  overflow: hidden;
+  height: $dashboardContentHeight;
+  background-color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0px;
+  border-color: black;
+  text-align: center;
+
+  .prm-name {
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    //padding-top: 10px;
+    margin: 5px;
+    background-color: lightgray;
+    span {
+        vertical-align: bottom;
+        font-family: roboto sans-serif;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+  }
+
+  .prm-value {
+    position: relative;
+    height: 80px;
+    margin: auto;
+    span.num {
+      margin: 0;
+      position: absolute;
+      display:block;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: roboto sans-serif;
+      font-size: 50px;
+      font-weight: bold;
+    }
+    span.date {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: roboto sans-serif;
+      font-size: 20px;
+    }
+  }
+}
+
+@import '_charts.scss';
+@import '_tabs.scss';
+@import '_table.scss';
+
+
+  //FUTURE ELEMENTS !!!
+  .navbar li.login,
+  .navbar li.username {
+    display: none !important;
+  }
+

@@ -1,0 +1,570 @@
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+body {
+  line-height: 1; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+nav ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent; }
+
+/* change colours to suit your needs */
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none; }
+
+/* change colours to suit your needs */
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: bold; }
+
+del {
+  text-decoration: line-through; }
+
+abbr[title], dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* change border colour to suit your needs */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #cccccc;
+  margin: 1em 0;
+  padding: 0; }
+
+input, select {
+  vertical-align: middle; }
+
+body {
+  background-color: grey; }
+
+#wrapper {
+  margin: auto;
+  background-color: black;
+  max-width: 1200px; }
+
+* {
+  box-sizing: border-box; }
+
+/* Breakpoints for smaller than bootstrap extra smal:l
+      xxs - 320px
+      xxxs - 480px
+      */
+@media (max-width: 350px) {
+  .col-xxxs-12 {
+    width: 100%; }
+  .col-xxxs-11 {
+    width: 91.66666667%; }
+  .col-xxxs-10 {
+    width: 83.33333333%; }
+  .col-xxxs-9 {
+    width: 75%; }
+  .col-xxxs-8 {
+    width: 66.66666667%; }
+  .col-xxxs-7 {
+    width: 58.33333333%; }
+  .col-xxxs-6 {
+    width: 50%; }
+  .col-xxxs-5 {
+    width: 41.66666667%; }
+  .col-xxxs-4 {
+    width: 33.33333333%; }
+  .col-xxxs-3 {
+    width: 25%; }
+  .col-xxxs-2 {
+    width: 16.66666667%; }
+  .col-xxxs-1 {
+    width: 8.33333333%; }
+  .col-xxxs-pull-12 {
+    right: 100%; }
+  .col-xxxs-pull-11 {
+    right: 91.66666667%; }
+  .col-xxxs-pull-10 {
+    right: 83.33333333%; }
+  .col-xxxs-pull-9 {
+    right: 75%; }
+  .col-xxxs-pull-8 {
+    right: 66.66666667%; }
+  .col-xxxs-pull-7 {
+    right: 58.33333333%; }
+  .col-xxxs-pull-6 {
+    right: 50%; }
+  .col-xxxs-pull-5 {
+    right: 41.66666667%; }
+  .col-xxxs-pull-4 {
+    right: 33.33333333%; }
+  .col-xxxs-pull-3 {
+    right: 25%; }
+  .col-xxxs-pull-2 {
+    right: 16.66666667%; }
+  .col-xxxs-pull-1 {
+    right: 8.33333333%; }
+  .col-xxxs-pull-0 {
+    right: auto; }
+  .col-xxxs-push-12 {
+    left: 100%; }
+  .col-xxxs-push-11 {
+    left: 91.66666667%; }
+  .col-xxxs-push-10 {
+    left: 83.33333333%; }
+  .col-xxxs-push-9 {
+    left: 75%; }
+  .col-xxxs-push-8 {
+    left: 66.66666667%; }
+  .col-xxxs-push-7 {
+    left: 58.33333333%; }
+  .col-xxxs-push-6 {
+    left: 50%; }
+  .col-xxxs-push-5 {
+    left: 41.66666667%; }
+  .col-xxxs-push-4 {
+    left: 33.33333333%; }
+  .col-xxxs-push-3 {
+    left: 25%; }
+  .col-xxxs-push-2 {
+    left: 16.66666667%; }
+  .col-xxxs-push-1 {
+    left: 8.33333333%; }
+  .col-xxxs-push-0 {
+    left: auto; }
+  .col-xxxs-offset-12 {
+    margin-left: 100%; }
+  .col-xxxs-offset-11 {
+    margin-left: 91.66666667%; }
+  .col-xxxs-offset-10 {
+    margin-left: 83.33333333%; }
+  .col-xxxs-offset-9 {
+    margin-left: 75%; }
+  .col-xxxs-offset-8 {
+    margin-left: 66.66666667%; }
+  .col-xxxs-offset-7 {
+    margin-left: 58.33333333%; }
+  .col-xxxs-offset-6 {
+    margin-left: 50%; }
+  .col-xxxs-offset-5 {
+    margin-left: 41.66666667%; }
+  .col-xxxs-offset-4 {
+    margin-left: 33.33333333%; }
+  .col-xxxs-offset-3 {
+    margin-left: 25%; }
+  .col-xxxs-offset-2 {
+    margin-left: 16.66666667%; }
+  .col-xxxs-offset-1 {
+    margin-left: 8.33333333%; }
+  .col-xxxs-offset-0 {
+    margin-left: 0%; } }
+
+@media (min-width: 350px) and (max-width: 500px) {
+  .col-xxs-12 {
+    width: 100%; }
+  .col-xxs-11 {
+    width: 91.66666667%; }
+  .col-xxs-10 {
+    width: 83.33333333%; }
+  .col-xxs-9 {
+    width: 75%; }
+  .col-xxs-8 {
+    width: 66.66666667%; }
+  .col-xxs-7 {
+    width: 58.33333333%; }
+  .col-xxs-6 {
+    width: 50%; }
+  .col-xxs-5 {
+    width: 41.66666667%; }
+  .col-xxs-4 {
+    width: 33.33333333%; }
+  .col-xxs-3 {
+    width: 25%; }
+  .col-xxs-2 {
+    width: 16.66666667%; }
+  .col-xxs-1 {
+    width: 8.33333333%; }
+  .col-xxs-pull-12 {
+    right: 100%; }
+  .col-xxs-pull-11 {
+    right: 91.66666667%; }
+  .col-xxs-pull-10 {
+    right: 83.33333333%; }
+  .col-xxs-pull-9 {
+    right: 75%; }
+  .col-xxs-pull-8 {
+    right: 66.66666667%; }
+  .col-xxs-pull-7 {
+    right: 58.33333333%; }
+  .col-xxs-pull-6 {
+    right: 50%; }
+  .col-xxs-pull-5 {
+    right: 41.66666667%; }
+  .col-xxs-pull-4 {
+    right: 33.33333333%; }
+  .col-xxs-pull-3 {
+    right: 25%; }
+  .col-xxs-pull-2 {
+    right: 16.66666667%; }
+  .col-xxs-pull-1 {
+    right: 8.33333333%; }
+  .col-xxs-pull-0 {
+    right: auto; }
+  .col-xxs-push-12 {
+    left: 100%; }
+  .col-xxs-push-11 {
+    left: 91.66666667%; }
+  .col-xxs-push-10 {
+    left: 83.33333333%; }
+  .col-xxs-push-9 {
+    left: 75%; }
+  .col-xxs-push-8 {
+    left: 66.66666667%; }
+  .col-xxs-push-7 {
+    left: 58.33333333%; }
+  .col-xxs-push-6 {
+    left: 50%; }
+  .col-xxs-push-5 {
+    left: 41.66666667%; }
+  .col-xxs-push-4 {
+    left: 33.33333333%; }
+  .col-xxs-push-3 {
+    left: 25%; }
+  .col-xxs-push-2 {
+    left: 16.66666667%; }
+  .col-xxs-push-1 {
+    left: 8.33333333%; }
+  .col-xxs-push-0 {
+    left: auto; }
+  .col-xxs-offset-12 {
+    margin-left: 100%; }
+  .col-xxs-offset-11 {
+    margin-left: 91.66666667%; }
+  .col-xxs-offset-10 {
+    margin-left: 83.33333333%; }
+  .col-xxs-offset-9 {
+    margin-left: 75%; }
+  .col-xxs-offset-8 {
+    margin-left: 66.66666667%; }
+  .col-xxs-offset-7 {
+    margin-left: 58.33333333%; }
+  .col-xxs-offset-6 {
+    margin-left: 50%; }
+  .col-xxs-offset-5 {
+    margin-left: 41.66666667%; }
+  .col-xxs-offset-4 {
+    margin-left: 33.33333333%; }
+  .col-xxs-offset-3 {
+    margin-left: 25%; }
+  .col-xxs-offset-2 {
+    margin-left: 16.66666667%; }
+  .col-xxs-offset-1 {
+    margin-left: 8.33333333%; }
+  .col-xxs-offset-0 {
+    margin-left: 0%; } }
+
+#content {
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  height: inherit; }
+
+.navbar {
+  height: 54px;
+  background-color: black;
+  color: white;
+  font-size: 24px;
+  font-family: roboto sans-serif;
+  margin: 0px !important; }
+  .navbar .nav-left {
+    height: 100%;
+    float: left; }
+  .navbar .nav-right {
+    float: right; }
+  .navbar li {
+    padding: 9px;
+    display: table-cell; }
+  .navbar .main-menu {
+    height: 100%;
+    color: black;
+    background-color: white; }
+  .navbar .login:hover {
+    color: black;
+    background-color: white; }
+
+@media (max-width: 768px) {
+  .navbar .reduce {
+    font-size: 18px; }
+  .navbar .hide {
+    display: none !important; } }
+
+.left-side {
+  width: 51px;
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+  background-color: black; }
+
+@media (max-width: 768px) {
+  .remove {
+    display: none !important; }
+  .right-side {
+    margin-left: 0px !important; } }
+
+.right-side {
+  margin-left: 51px;
+  margin-bottom: -9999px;
+  padding-bottom: 9999px; }
+
+.dashboard {
+  width: 100% !important;
+  height: 158px;
+  background-color: white; }
+
+.block {
+  padding: 0;
+  height: 100%; }
+
+.container {
+  padding: 0;
+  margin: 0; }
+
+.row {
+  height: 100%;
+  padding-top: 5px;
+  padding-bottom: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 0; }
+
+.parameter {
+  overflow: hidden;
+  height: 141px;
+  background-color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0px;
+  border-color: black;
+  text-align: center; }
+  .parameter .prm-name {
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    margin: 5px;
+    background-color: lightgray; }
+    .parameter .prm-name span {
+      vertical-align: bottom;
+      font-family: roboto sans-serif;
+      font-size: 18px;
+      white-space: nowrap; }
+  .parameter .prm-value {
+    position: relative;
+    height: 80px;
+    margin: auto; }
+    .parameter .prm-value span.num {
+      margin: 0;
+      position: absolute;
+      display: block;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: roboto sans-serif;
+      font-size: 50px;
+      font-weight: bold; }
+    .parameter .prm-value span.date {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: roboto sans-serif;
+      font-size: 20px; }
+
+.outcomeTitle {
+  text-align: center;
+  font-family: roboto sans-serif;
+  font-size: 18px;
+  padding: 0.5em;
+  background-color: lightgray; }
+
+.outcomeTitleType {
+  text-align: center;
+  font-size: 16px;
+  padding: 0.5em; }
+
+.ttabs {
+  clear: both;
+  margin: 5px 10px 10px 10px; }
+
+.ttabs > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+.ttabs > ul > li {
+  margin-left: 0px; }
+
+.ttabs > ul > li > a:link,
+.ttabs > ul > li > a:visited {
+  text-decoration: inherit;
+  color: inherit;
+  cursor: auto; }
+
+.ttabs-head {
+  height: 36px;
+  padding: 0;
+  border-bottom: 1px solid black; }
+
+.ttab {
+  position: relative;
+  float: left;
+  line-height: 35px;
+  margin-right: -15px; }
+
+.ttab-border {
+  float: left;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 35px solid black;
+  line-height: 35px; }
+
+.ttab-title {
+  height: 0px;
+  margin-top: 1px;
+  margin-left: -11px;
+  margin-right: -11px;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 34px solid white; }
+
+.ttabs-content {
+  position: relative;
+  min-height: 60px;
+  display: none;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black; }
+
+.active-btn {
+  position: relative;
+  top: 1px;
+  z-index: 10;
+  border-bottom: 1px solid transparent; }
+
+.active-content {
+  display: block; }
+
+#TabProcessMap img {
+  width: 100%; }
+
+.table-config-btn {
+  display: block;
+  right: 0;
+  position: absolute;
+  width: 20px;
+  text-align: right;
+  height: 20px;
+  z-index: 20; }
+
+.table-config-btn:hover {
+  cursor: pointer; }
+
+.bootstrap-table {
+  position: relative; }
+  .bootstrap-table .card-view .title {
+    width: 50%;
+    vertical-align: top; }
+  .bootstrap-table .card-view .value {
+    width: 50%;
+    display: inline-block;
+    text-align: left; }
+
+.bootstrap-table .fixed-table-toolbar {
+  height: 0;
+  overflow-y: hidden; }
+  .bootstrap-table .fixed-table-toolbar div.columns.columns-right.btn-group {
+    position: absolute;
+    right: 15px; }
+
+.bootstrap-table .fixed-table-toolbar .search {
+  padding: 10px;
+  margin: 0px;
+  line-height: normal; }
+  .bootstrap-table .fixed-table-toolbar .search input {
+    vertical-align: none; }
+
+#table tbody tr {
+  border-bottom: 1px solid #dddddd; }
+
+#table tbody,
+#table tbody td {
+  white-space: pre-wrap; }
+
+table > thead > tr > th[data-field='duration'] {
+  min-width: 50px; }
+
+table > thead > tr > th {
+  vertical-align: middle !important; }
+
+.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {
+  line-height: normal !important;
+  text-overflow: clip !important;
+  white-space: normal !important; }
+
+table td {
+  text-align: center; }
+
+.navbar li.login,
+.navbar li.username {
+  display: none !important; }

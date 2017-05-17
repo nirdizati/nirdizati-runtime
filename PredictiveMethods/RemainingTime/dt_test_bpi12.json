@@ -1,0 +1,80 @@
+[
+ {
+   "sequence_nr": 201605,
+   "Resource": 11189,
+   "AMOUNT_REQ": 25000,
+   "proctime": 173,
+   "time": "2012-01-17 09:14:35",
+   "elapsed": 0,
+   "activity_name": "W_Filling_in application",
+   "label": "true",
+   "event_nr": 1,
+   "last": "false",
+   "remtime": 0
+ },
+ {
+   "sequence_nr": 201605,
+   "Resource": 11000,
+   "AMOUNT_REQ": 25000,
+   "proctime": 852,
+   "time": "2012-01-24 09:05:37",
+   "elapsed": 604262.000000002,
+   "activity_name": "W_Calling_after_offers",
+   "label": "true",
+   "event_nr": 2,
+   "last": "false",
+   "remtime": 0
+ },
+ {
+   "sequence_nr": 201605,
+   "Resource": 10809,
+   "AMOUNT_REQ": 25000,
+   "proctime": 1215,
+   "time": "2012-02-09 06:34:07",
+   "elapsed": 1977572,
+   "activity_name": "W_Assessing_application",
+   "label": "true",
+   "event_nr": 3,
+   "last": "false",
+   "remtime": 0
+ },
+ {
+   "sequence_nr": 201605,
+   "Resource": 10931,
+   "AMOUNT_REQ": 25000,
+   "proctime": 6901,
+   "time": "2012-02-09 10:05:31",
+   "elapsed": 1990256,
+   "activity_name": "W_Calling _missing_information",
+   "label": "true",
+   "event_nr": 4,
+   "last": "false",
+   "remtime": 0
+ },
+ {
+   "sequence_nr": 201605,
+   "Resource": 10809,
+   "AMOUNT_REQ": 25000,
+   "proctime": 526,
+   "time": "2012-02-10 09:44:04",
+   "elapsed": 2075369,
+   "activity_name": "W_Assessing_application",
+   "label": "true",
+   "event_nr": 5,
+   "last": "false",
+   "remtime": 0
+ },
+ {
+   "sequence_nr": 201605,
+   "Resource": 11181,
+   "AMOUNT_REQ": 25000,
+   "proctime": 2220,
+   "time": "2012-02-10 13:58:05",
+   "elapsed": 2090610,
+   "activity_name": "W_Calling _missing_information",
+   "label": "true",
+   "event_nr": 6,
+   "last": "false",
+   "remtime": 0
+ }
+]

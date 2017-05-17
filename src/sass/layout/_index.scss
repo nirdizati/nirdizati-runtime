@@ -1,0 +1,11 @@
+@import "_grid_mobile.scss";
+
+#header {
+}
+
+#content {
+  width: 100%;
+  overflow: hidden;
+  background-color: $contentBackgroundColor;
+  height: inherit;
+}

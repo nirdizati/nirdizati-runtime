@@ -1,0 +1,2 @@
+# Ignore all cpickle models (not included due to their large size)
+*.cpickle

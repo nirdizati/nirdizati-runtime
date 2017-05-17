@@ -1,0 +1,29 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrii Rozumnyi",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-csso": "^2.0.0",
+    "gulp-minify": "0.0.15",
+    "gulp-processhtml": "^1.1.0",
+    "gulp-sass": "^3.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-grid": "^2.0.1",
+    "bootstrap-table": "^1.11.2",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "jquery-mousewheel": "^3.1.13",
+    "jquery.scrollto": "^2.1.2"
+  }
+}
