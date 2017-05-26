@@ -596,7 +596,7 @@ select {
 
 .left-side,
 .navbar {
-  background-color: #000;
+  background-color: #092f65;
 }
 
 .navbar {
@@ -627,7 +627,7 @@ select {
 
 .navbar .login:hover,
 .navbar .main-menu {
-  color: #000;
+  color: #092f65;
   background-color: #fff;
 }
 
@@ -658,7 +658,6 @@ select {
 }
 
 .right-side {
-  margin-left: 51px;
   margin-bottom: -9999px;
   padding-bottom: 9999px;
 }
@@ -887,7 +886,6 @@ select {
   border-bottom: 1px solid #ddd;
 }
 
-#table tbody,
 #table tbody td {
   white-space: pre-wrap;
 }
