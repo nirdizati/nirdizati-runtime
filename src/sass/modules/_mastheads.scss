@@ -1,0 +1,61 @@
+.masthead {
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+  .masthead-landing {
+    background-image: url(/media/masthead/masthead-landing.png);
+    background-position: right bottom;
+    position: relative;
+    min-height: 590px;
+    margin-bottom: 44px;
+    height: 98vh;
+
+    div {
+      font-size: 23px;
+      line-height: 1.2;
+    }
+
+    .container {
+      height: 100%;
+      position: relative;
+    }
+  }
+
+  .masthead-content {
+    width: 100%;
+
+    .masthead-landing & {
+      width: 565px;
+      max-width: 100%;
+      padding: 0 15px;
+      height: 314px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      text-align: center;
+      color: $colorWhite;
+      font-size: 24px;
+
+      @media (min-width: 1200px) {
+        height: 435px;
+      }
+
+      @media (min-width: 1200px) {
+        right: auto;
+      }
+
+      img {
+        margin-bottom: 24px;
+        max-width: 100%;
+      }
+
+      .btn {
+        margin-top: 50px;
+      }
+    }
+  }

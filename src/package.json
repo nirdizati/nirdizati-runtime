@@ -12,6 +12,7 @@
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-concat-css": "^2.3.0",
+    "gulp-connect": "^5.0.0",
     "gulp-csso": "^2.0.0",
     "gulp-minify": "0.0.15",
     "gulp-processhtml": "^1.1.0",

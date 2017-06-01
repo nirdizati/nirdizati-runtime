@@ -1,0 +1,22 @@
+.h1 {
+  font-size: 55px;
+  margin: 36px 0 26px;
+  font-weight: 700;
+
+  @media (max-width: 1199px) {
+    font-size: 44px;
+  }
+
+  @media (max-width: 991px) {
+    font-size: 33px;
+  }
+}
+
+p {
+  font-size: 22px;
+  line-height: 1.1;
+
+  @media (max-width: 767px) {
+    font-size: 18px;
+  }
+}

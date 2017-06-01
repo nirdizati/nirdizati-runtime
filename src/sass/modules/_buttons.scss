@@ -1,0 +1,24 @@
+.btn-primary {
+  background: $colorBlueLight;
+  border-color: $colorBlueLight;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: $colorBlueDark;
+    border-color: $colorBlueDark;
+  }
+}
+
+.btn-lg {
+  padding: 15px 60px;
+  font-size: 39px;
+  font-weight: 700;
+  border-radius: 50px;
+  max-width: 100%;
+
+  @media (max-width: 767px) {
+    padding: 10px 35px;
+    font-size: 32px;
+  }
+}

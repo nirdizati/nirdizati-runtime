@@ -1,0 +1,24 @@
+.learn-more {
+  position: absolute;
+  width: 220px;
+  text-align: center;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 23px;
+  font-size: 24px;
+  color: $colorWhite;
+  cursor: pointer;
+
+  @media (max-width: 991px) {
+    bottom: 40px;
+  }
+}
+
+  .learn-more-text {
+    display: block;
+  }
+
+  .learn-more-icon {
+    font-size: 42px;
+  }

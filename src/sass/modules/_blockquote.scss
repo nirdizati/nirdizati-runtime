@@ -1,0 +1,66 @@
+.blockquote {
+  max-width: 749px;
+  margin: 0 auto;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+}
+
+  %quotes-size {
+    width: 17px;
+    height: 12px;
+    background-size: cover;
+
+    @media (min-width: 768px) {
+      width: 52px;
+      height: 37px;
+    }
+  }
+
+  %quotes--big {
+    &:before {
+      @extend %quotes-size;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background-image: url(/media/icons/quote-begin.png);
+    }
+
+    &:last-child:after {
+      @extend %quotes-size;
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-image: url(/media/icons/quote-end.png);
+      margin-left: 7px;
+
+      @media (min-width: 1200px) {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .blockquote__body {
+    padding: 15px;
+    padding-left: 26px;
+    text-align: center;
+
+    @media (min-width: 768px) {
+      padding: 37px;
+      padding-left: 62px;
+    }
+
+    p {
+      @extend %quotes--big;
+
+      color: $colorBlue;
+      font-size: 22px;
+      line-height: 24px;
+      text-transform: uppercase;
+    }
+  }
