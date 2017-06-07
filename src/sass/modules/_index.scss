@@ -19,9 +19,9 @@
     display: table-cell;
   }
   .main-menu {
-    height: 100%;
+    height: 52px;
     color: $navbarColor1;
-    background-color: $navbarColor2;
+    //background-color: $navbarColor2;
   }
   //.main-menu:hover {
   //  cursor: pointer;
@@ -65,7 +65,7 @@
 }
 
 .right-side {
-  margin-left: 51px;
+  //margin-left: 51px;
   margin-bottom: -9999px;
   padding-bottom: 9999px;
 }
@@ -118,12 +118,14 @@ $dashboardContentHeight: 141px;
     line-height: 35px;
     //padding-top: 10px;
     margin: 5px;
-    background-color: lightgray;
+    background-color: #36a0dd;
     span {
-        vertical-align: bottom;
-        font-family: roboto sans-serif;
-        font-size: 18px;
-        white-space: nowrap;
+      vertical-align: bottom;
+      font-family: roboto sans-serif;
+      font-size: 16px;
+      white-space: nowrap;
+      color: white;
+      text-transform: uppercase;
     }
   }
 
@@ -151,6 +153,7 @@ $dashboardContentHeight: 141px;
       transform: translate(-50%, -50%);
       font-family: roboto sans-serif;
       font-size: 20px;
+      font-weight: bold;
     }
   }
 }

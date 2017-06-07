@@ -317,7 +317,7 @@ body {
 
 .navbar {
   height: 54px;
-  background-color: black;
+  background-color: #092F65;
   color: white;
   font-size: 24px;
   font-family: roboto sans-serif;
@@ -331,11 +331,10 @@ body {
     padding: 9px;
     display: table-cell; }
   .navbar .main-menu {
-    height: 100%;
-    color: black;
-    background-color: white; }
+    height: 52px;
+    color: #092F65; }
   .navbar .login:hover {
-    color: black;
+    color: #092F65;
     background-color: white; }
 
 @media (max-width: 768px) {
@@ -348,7 +347,7 @@ body {
   width: 51px;
   margin-bottom: -99999px;
   padding-bottom: 99999px;
-  background-color: black; }
+  background-color: #092F65; }
 
 @media (max-width: 768px) {
   .remove {
@@ -357,7 +356,6 @@ body {
     margin-left: 0px !important; } }
 
 .right-side {
-  margin-left: 51px;
   margin-bottom: -9999px;
   padding-bottom: 9999px; }
 
@@ -400,12 +398,14 @@ body {
     height: 35px;
     line-height: 35px;
     margin: 5px;
-    background-color: lightgray; }
+    background-color: #36a0dd; }
     .parameter .prm-name span {
       vertical-align: bottom;
       font-family: roboto sans-serif;
-      font-size: 18px;
-      white-space: nowrap; }
+      font-size: 16px;
+      white-space: nowrap;
+      color: white;
+      text-transform: uppercase; }
   .parameter .prm-value {
     position: relative;
     height: 80px;
@@ -428,7 +428,8 @@ body {
       left: 50%;
       transform: translate(-50%, -50%);
       font-family: roboto sans-serif;
-      font-size: 20px; }
+      font-size: 20px;
+      font-weight: bold; }
 
 .outcomeTitle {
   text-align: center;
@@ -547,7 +548,6 @@ body {
 #table tbody tr {
   border-bottom: 1px solid #dddddd; }
 
-#table tbody,
 #table tbody td {
   white-space: pre-wrap; }
 
