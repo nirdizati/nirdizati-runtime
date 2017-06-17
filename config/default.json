@@ -103,7 +103,7 @@
       },
       "accelerator": 50,
       "isTestMode": true,
-      "testInterval": 6000
+      "testInterval": 10000
     }
   },
 
@@ -160,7 +160,7 @@
       },
       "accelerator": 50,
       "isTestMode": true,
-      "testInterval": 4000
+      "testInterval": 7000
     }
   }
 }
