@@ -58,6 +58,9 @@ function onInit(data) {
 	updateParams(data);
 	loadTable(data);
 	reloadCharts(data);
+
+	//Hide first load spinner
+	$('.first-load-spinner').hide();
 }
 
 function updateUI(data) {
