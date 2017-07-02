@@ -1,0 +1,167 @@
+{
+  // app specific settings
+  "app": {
+    "port": 8080,
+    "clean": true
+  },
+
+  "mongoose": {
+    "uri": "mongodb://localhost:27017/dev",
+    "options": {}
+  },
+
+  "redis": {
+    "connection": {
+      "host": "localhost",
+      "port": 6379,
+      "ns":  "vis-pred"
+    },
+    "jobQueue": "jobs-queue"
+  },
+
+  // default config for replayer; if replayer is executed with log name as param, then log specific replayer will be used
+  "replayer": {
+    "log": "bpi_12",
+    "request": {
+      "hostname": "localhost",
+      "port": 8080,
+      "path": "/event",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "replayer:12345"
+      }
+    },
+    "accelerator": 20,
+    "isTestMode": false,
+    "testInterval": 5000
+  },
+
+  // BPI 2017 configurations
+  "bpi_17": {
+    "path": "data/test_bpi17_sorted.csv",
+    "timeField": "time",
+    "timeFormat": "YYYY-MM-DD HH:mm:ss",
+    "caseIdField": "sequence_nr",
+    "eventNameField": "activity_name",
+
+    "ui": {
+      "daysInterval": 8,
+      "barsCountForTimeIntervals": 7, // how many bars are in UI, last bar aggregates results by principal 'all that takes longer than previous'
+      "barsCountInLengthDistribution": 9,
+      "barsWidthForLength": 3
+    },
+
+    "methods": {
+      "outcomes": {
+        "slow_probability": {
+          "wd": "/PredictiveMethods/CaseOutcome/",
+          "executable": "python",
+          "args": ["test.py", "", "bpi17", "label2"],
+          "type": "temporal",
+          "probabilityThreshold": 0.52, // used for label prediction, more than value is Slow, otherwise - Quick
+          "property": "slow",
+          "criterion": "duration",
+          "criterionThreshold": 2592000000, // = 30 days in ms, used for label identification, more than value is Slow, otherwise - Quick
+          "ui": {
+            "name": "Case duration within 30 days",
+            "labels": ["Slow", "Quick"],
+            "historical": [1390, 1398]
+          }
+        },
+        "rejected_probability": {
+          "wd": "/PredictiveMethods/CaseOutcome/",
+          "executable": "python",
+          "args": ["test.py", "", "bpi17", "label"],
+          "type": "logical",
+          "probabilityThreshold": 0.45, // used for label prediction, more than value is Rejected, otherwise - Accepted
+          "property": "rejected",
+          "label": "label",
+          "ui": {
+            "name": "Application acceptance",
+            "labels": ["Rejected", "Accepted"],
+            "historical": [877, 1911]
+          }
+        }
+      },
+      "remainingTime": {
+        "wd": "/PredictiveMethods/RemainingTime/",
+        "executable": "python",
+        "args": ["test.py", "", "bpi17"]
+      }
+    },
+
+    "replayer": {
+      "request": {
+        "hostname": "nirdizati.com",
+        "port": 80,
+        "path": "/event",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "replayer:12345"
+        }
+      },
+      "accelerator": 50,
+      "isTestMode": true,
+      "testInterval": 10000
+    }
+  },
+
+  // BPI 2012 configurations
+  "bpi_12": {
+    "path": "data/test_bpi12_sorted.csv",
+    "timeField": "time",
+    "timeFormat": "YYYY-MM-DD HH:mm:ss",
+    "caseIdField": "sequence_nr",
+    "eventNameField": "activity_name",
+
+    "ui": {
+      "daysInterval": 4,
+      "barsCountForTimeIntervals": 7, // how many bars are in UI, last bar aggregates results by principal 'all that takes longer than previous'
+      "barsCountInLengthDistribution": 9,
+      "barsWidthForLength": 2
+    },
+
+    "methods": {
+      "outcomes": {
+        "slow_probability": {
+          "wd": "/PredictiveMethods/CaseOutcome/",
+          "executable": "python",
+          "args": ["test.py", "", "bpi12", "label"],
+          "type": "temporal",
+          "probabilityThreshold": 0.6, // used for label prediction, more than value is Slow, otherwise - Quick
+          "property": "slow",
+          "criterion": "duration",
+          "criterionThreshold": 1382400000, // used for label identification, in ms, more than value is Slow, otherwise - Quick
+          "ui": {
+            "name": "Case duration within 16 days",
+            "labels": ["Slow", "Quick"],
+            "historical": [2047, 4577]
+          }
+        }
+      },
+      "remainingTime": {
+        "wd": "/PredictiveMethods/RemainingTime/",
+        "executable": "python",
+        "args": ["test.py", "", "bpi12"]
+      }
+    },
+
+    "replayer": {
+      "request": {
+        "hostname": "nirdizati.com",
+        "port": 80,
+        "path": "/event",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "replayer:12345"
+        }
+      },
+      "accelerator": 50,
+      "isTestMode": true,
+      "testInterval": 7000
+    }
+  }
+}
