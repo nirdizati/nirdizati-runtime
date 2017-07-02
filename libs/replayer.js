@@ -75,7 +75,7 @@ function start(events, units) {
 		}
 
 		currentEvent = nextEvent;
-		setTimeout(replay, timeDiff);
+		return setTimeout(replay, timeDiff);
 	}
 
 	replay();
