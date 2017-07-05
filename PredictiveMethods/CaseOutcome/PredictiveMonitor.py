@@ -65,4 +65,4 @@ class PredictiveMonitor():
         for label_col_idx, label in enumerate(pred_model.cls.classes_):
             if label == self.pos_label:
                 # output probability of a positive class
-                print(np.round(predictions_proba[0, label_col_idx], decimals=3))
+                return np.round(predictions_proba[0, label_col_idx], decimals=3)
