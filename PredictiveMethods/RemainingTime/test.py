@@ -59,4 +59,4 @@ predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=ca
 with open('predictive_monitor_%s.cpickle' % dataset, 'rb') as f:
     predictive_monitor.models = cPickle.load(f)
 
-predictive_monitor.test(test)
+print predictive_monitor.test(test)
