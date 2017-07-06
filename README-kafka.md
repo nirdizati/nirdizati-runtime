@@ -51,7 +51,7 @@ Launch the Kafka processors for the predictive methods using a separate terminal
 
 ```sh
 cd $NIRDIZATI_ROOT
-python PredictiveMethods/join-events-to-predictions.py localhost:9092 events predictions 2
+python PredictiveMethods/join-events-to-predictions.py localhost:9092 bpi_12 bpi_17 predictions events_with_predictions
 
 cd PredictiveMethods/CaseOutcome
 python case-outcome-kafka-processor.py bpi12 label localhost:9092 bpi_12 predictions
