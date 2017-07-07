@@ -82,7 +82,7 @@ NODE_ENV='development' node libs/replayer.js bpi_17
 
 The web browser should begin to show updates.
 
-![Dataflow diagram](dataflow.svg)
+![Dataflow diagram](dataflow.pdf)
 
 ## Utilities ##
 You can monitor the `predictions` topic using the following command line:
