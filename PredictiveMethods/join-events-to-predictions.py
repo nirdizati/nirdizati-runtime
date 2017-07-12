@@ -37,24 +37,21 @@ def reformat(x):
     return y
 
 if len(sys.argv) != 6:
-    sys.exit("Usage: python join-events-to-predictions.py bootstrap-server:port events-topic1 events-topic2 ... predictions-topic events-with-predictions-topic")
+    sys.exit("Usage: python join-events-to-predictions.py bootstrap-server:port events-topic predictions-topic events-with-predictions-topic prediction-quorum")
 
-bootstrap_server, events_bpi12, events_bpi17, predictions, destination_topic = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5]
+bootstrap_server, events, predictions, destination_topic, prediction_quorum = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5])
 
-consumer = KafkaConsumer(bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
-consumer.subscribe(topics=[events_bpi12, events_bpi17, predictions])
+consumer = KafkaConsumer(group_id='join({},{})'.format(events,predictions), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
+consumer.subscribe(topics=[events, predictions])
 producer = KafkaProducer(bootstrap_servers=bootstrap_server)
 
 cases = {}
 
-prediction_quorum = { "bpi_12": 2, "bpi_17": 3 }
-
 """ Read from the Kafka topic """
 for message in consumer:
     latest = {
-        events_bpi12: lambda x: x[-1],
-        events_bpi17: lambda x: x[-1],
-        predictions:  lambda x: x
+        events: lambda x: x[-1],
+        predictions: lambda x: x
     }.get(message.topic)(json.loads(message.value))
 
     log         = latest["log"]
@@ -75,7 +72,7 @@ for message in consumer:
         cases[log][sequence_nr][event_nr].update(latest)
         if "predictions" in latest:
             cases[log][sequence_nr][event_nr]["predictions"] = fupdate(oldPredictions, latest["predictions"])
-        if "_id" in cases[log][sequence_nr][event_nr] and len(cases[log][sequence_nr][event_nr]["predictions"]) == prediction_quorum[log]:
+        if "_id" in cases[log][sequence_nr][event_nr] and len(cases[log][sequence_nr][event_nr]["predictions"]) == prediction_quorum:
             result = json.dumps(reformat(cases[log][sequence_nr][event_nr]))
             print(result)
             print

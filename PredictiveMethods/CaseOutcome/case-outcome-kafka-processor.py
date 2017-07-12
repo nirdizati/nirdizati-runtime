@@ -35,8 +35,8 @@ bootstrap_server = sys.argv[3]
 source_topic = sys.argv[4]
 destination_topic = sys.argv[5]
 
-print("Bootstrap server: " + bootstrap_server)
-consumer = KafkaConsumer(source_topic, bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
+group_id = 'caseOutcome({},{})'.format(dataset, label_col)
+consumer = KafkaConsumer(source_topic, group_id='caseOutcome({},{})'.format(dataset, label_col), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
 producer = KafkaProducer(bootstrap_servers=bootstrap_server)
 
 """ Read from the Kafka topic """

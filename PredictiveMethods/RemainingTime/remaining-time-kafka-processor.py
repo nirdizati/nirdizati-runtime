@@ -34,7 +34,7 @@ bootstrap_server = sys.argv[2]
 source_topic = sys.argv[3]
 destination_topic = sys.argv[4]
 
-consumer = KafkaConsumer(source_topic, bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
+consumer = KafkaConsumer(source_topic, group_id='remainingTime({})'.format(dataset), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
 producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
 """ Read from the Kafka topic """

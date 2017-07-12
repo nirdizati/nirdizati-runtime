@@ -81,8 +81,8 @@ function _onMessage(message, io, next) {
 		}
 
 		log.info(`Starting calculation for next message: ${message}`);
-		producer.send([{ topic: logName, messages: [ JSON.stringify(payload.prefix) ]}], function(err, data) {
-                        log.info(`Forwarded from redis to kafka topic ${logName}`);
+		producer.send([{ topic: 'events_'+logName, messages: [ JSON.stringify(payload.prefix) ]}], function(err, data) {
+                        log.info(`Forwarded from redis to kafka topic events_${logName}`);
                         if (err) {
                                 log.error(`Error sending event: ${err.message}`);
                         }

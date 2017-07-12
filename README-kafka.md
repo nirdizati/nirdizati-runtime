@@ -25,9 +25,10 @@ Create the topics using (for instance) the following command lines:
 
 ```sh
 cd $KAFKA_ROOT
-bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic bpi_12 --replication-factor 1 --partitions 1
-bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic bpi_17 --replication-factor 1 --partitions 1
-bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic predictions --replication-factor 1 --partitions 1
+bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic events_bpi_12 --replication-factor 1 --partitions 1
+bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic events_bpi_17 --replication-factor 1 --partitions 1
+bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic predictions_bpi_12 --replication-factor 1 --partitions 1
+bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic predictions_bpi_17 --replication-factor 1 --partitions 1
 bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic events_with_predictions --replication-factor 1 --partitions 1
 ```
 
@@ -50,17 +51,18 @@ python train.py bpi17 label  # generates predictive_monitor_bpi17_label.cpickle
 Launch the Kafka processors for the predictive methods using a separate terminal session for each of the following command lines:
 
 ```sh
+cd $NIRDIZATI_ROOT/PredictiveMethods/CaseOutcome
+python case-outcome-kafka-processor.py bpi12 label localhost:9092 events_bpi_12 predictions_bpi_12   # probability to be slow
+python case-outcome-kafka-processor.py bpi17 label localhost:9092 events_bpi_17 predictions_bpi_17   # probability to be slow
+python case-outcome-kafka-processor.py bpi17 label2 localhost:9092 events_bpi_17 predictions_bpi_17  # probability to be rejected
+
+cd $NIRDIZATI_ROOT/PredictiveMethods/RemainingTime
+python remaining-time-kafka-processor.py bpi12 localhost:9092 bpi_12 predictions_bpi_12
+python remaining-time-kafka-processor.py bpi17 localhost:9092 bpi_17 predictions_bpi_17
+
 cd $NIRDIZATI_ROOT
-python PredictiveMethods/join-events-to-predictions.py localhost:9092 bpi_12 bpi_17 predictions events_with_predictions
-
-cd PredictiveMethods/CaseOutcome
-python case-outcome-kafka-processor.py bpi12 label localhost:9092 bpi_12 predictions
-python case-outcome-kafka-processor.py bpi17 label localhost:9092 bpi_17 predictions
-python case-outcome-kafka-processor.py bpi17 label2 localhost:9092 bpi_17 predictions
-
-cd PredictiveMethods/RemainingTime
-python remaining-time-kafka-processor.py bpi12 localhost:9092 bpi_12 predictions
-python remaining-time-kafka-processor.py bpi17 localhost:9092 bpi_17 predictions
+python PredictiveMethods/join-events-to-predictions.py localhost:9092 events_bpi_12 predictions_bpi_12 events_with_predictions 2  # join event + 2 predictions
+python PredictiveMethods/join-events-to-predictions.py localhost:9092 events_bpi_17 predictions_bpi_17 events_with_predictions 3  # join event + 3 predictions
 ```
 
 Launch the web UI using the following command line:
@@ -82,14 +84,14 @@ NODE_ENV='development' node libs/replayer.js bpi_17
 
 The web browser should begin to show updates.
 
-![Dataflow diagram](dataflow.pdf)
+![Dataflow diagram](dataflow.png)
 
 ## Utilities ##
-You can monitor the `predictions` topic using the following command line:
+You can monitor a topic (e.g. `events_bpi_12` below) using the following command line:
 
 ```sh
 cd $KAFKA_ROOT
-bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic predictions --from-beginning
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic events_bpi_12 --from-beginning
 ```
 
 There's no easy way to purge topics, other than deleting them and recreating them.
@@ -98,8 +100,9 @@ The topics can then be deleted as follows:
 
 ```sh
 cd $KAFKA_ROOT
-bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic bpi_12
-bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic bpi_17
-bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic predictions
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic events_bpi_12
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic events_bpi_17
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic predictions_bpi_12
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic predictions_bpi_17
 bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic events_with_predictions
 ```
