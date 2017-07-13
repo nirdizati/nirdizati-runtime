@@ -26,6 +26,8 @@ import json
 from kafka import KafkaProducer, KafkaConsumer
 from StringIO import StringIO
 
+print sys.argv
+
 if len(sys.argv) != 5:
     sys.exit("Usage: python test.py dataset-name bootstrap-server:port source-topic destination-topic")
 
@@ -35,7 +37,7 @@ source_topic = sys.argv[3]
 destination_topic = sys.argv[4]
 
 consumer = KafkaConsumer(source_topic, group_id='remainingTime({})'.format(dataset), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+producer = KafkaProducer(bootstrap_servers=bootstrap_server)
 
 """ Read from the Kafka topic """
 for message in consumer:
