@@ -26,17 +26,13 @@ import json
 from kafka import KafkaProducer, KafkaConsumer
 from StringIO import StringIO
 
-if len(sys.argv) != 6:
-    sys.exit("Usage: python kafka-processor.py dataset-name label-column-id bootstrap-server:port source-topic destination-topic")
+if len(sys.argv) != 7:
+    sys.exit("Usage: python kafka-processor.py bootstrap-server:port events-topic predictions-topic dataset-name label-column-id json-column-id")
 
-dataset = sys.argv[1]
-label_col = sys.argv[2]
-bootstrap_server = sys.argv[3]
-source_topic = sys.argv[4]
-destination_topic = sys.argv[5]
+bootstrap_server, events_topic, predictions_topic, dataset, label_col, json_col = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]
 
-group_id = 'caseOutcome({},{})'.format(dataset, label_col)
-consumer = KafkaConsumer(source_topic, group_id='caseOutcome({},{})'.format(dataset, label_col), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
+group_id = 'caseOutcome({},{})'.format(dataset, json_col)
+consumer = KafkaConsumer(events_topic, group_id='caseOutcome({},{})'.format(dataset, json_col), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
 producer = KafkaProducer(bootstrap_servers=bootstrap_server)
 
 """ Read from the Kafka topic """
@@ -75,7 +71,7 @@ for message in consumer:
                                            label_col=label_col, pos_label=pos_label,
                                            cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-    with open('predictive_monitor_%s_%s.cpickle' % (dataset,label_col), 'rb') as f:
+    with open('PredictiveMethods/CaseOutcome/predictive_monitor_%s_%s.cpickle' % (dataset,label_col), 'rb') as f:
         predictive_monitor.models = cPickle.load(f)
 
     outcome = predictive_monitor.test(test);
@@ -84,8 +80,8 @@ for message in consumer:
         "sequence_nr": jsonValue[-1]["sequence_nr"],
         "event_nr":    jsonValue[-1]["event_nr"],
         "predictions": {
-            label_col: outcome
+            json_col: outcome
         }
     }
     print(json.dumps(output))
-    producer.send(destination_topic, json.dumps(output))
+    producer.send(predictions_topic, json.dumps(output))

@@ -27,13 +27,14 @@ def fupdate(lhs, rhs):
     return result
 
 def reformat(x):
+    print(json.dumps(x))
     y = {"payload":{"event":{}}}
     y["payload"]["event"].update(x)
     del y["payload"]["event"]["predictions"]
     y["remainingTime"] = x["predictions"]["remainingTime"]
-    y["outcomes"] = { "slow_probability": x["predictions"]["label"] }
-    if x["predictions"].get("label2") is not None:
-        y["outcomes"]["rejected_probability"] = x["predictions"]["label2"]
+    y["outcomes"] = {}
+    y["outcomes"].update(x["predictions"])
+    del y["outcomes"]["remainingTime"]
     return y
 
 if len(sys.argv) != 6:

@@ -26,17 +26,12 @@ import json
 from kafka import KafkaProducer, KafkaConsumer
 from StringIO import StringIO
 
-print sys.argv
-
 if len(sys.argv) != 5:
-    sys.exit("Usage: python test.py dataset-name bootstrap-server:port source-topic destination-topic")
+    sys.exit("Usage: python test.py bootstrap-server:port events-topic predictions-topic dataset-name")
 
-dataset = sys.argv[1]
-bootstrap_server = sys.argv[2]
-source_topic = sys.argv[3]
-destination_topic = sys.argv[4]
+bootstrap_server, events_topic, predictions_topic, dataset = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 
-consumer = KafkaConsumer(source_topic, group_id='remainingTime({})'.format(dataset), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
+consumer = KafkaConsumer(events_topic, group_id='remainingTime({})'.format(dataset), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
 producer = KafkaProducer(bootstrap_servers=bootstrap_server)
 
 """ Read from the Kafka topic """
@@ -72,11 +67,10 @@ for message in consumer:
     predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=case_id_col,
                                            cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-    with open('predictive_monitor_%s.cpickle' % dataset, 'rb') as f:
+    with open('PredictiveMethods/RemainingTime/predictive_monitor_%s.cpickle' % dataset, 'rb') as f:
         predictive_monitor.models = cPickle.load(f)
 
     outcome = predictive_monitor.test(test)
-    print(outcome)
     output = {
         "log":         jsonValue[-1]["log"],
         "sequence_nr": jsonValue[-1]["sequence_nr"],
@@ -86,4 +80,4 @@ for message in consumer:
         }
     }
     print(json.dumps(output))
-    producer.send(destination_topic, json.dumps(output))
+    producer.send(predictions_topic, json.dumps(output))
