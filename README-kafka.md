@@ -52,13 +52,13 @@ Launch the Kafka processors for the predictive methods using a separate terminal
 
 ```sh
 cd $NIRDIZATI_ROOT/PredictiveMethods/CaseOutcome
-python case-outcome-kafka-processor.py bpi12 label localhost:9092 events_bpi_12 predictions_bpi_12   # probability to be slow
-python case-outcome-kafka-processor.py bpi17 label localhost:9092 events_bpi_17 predictions_bpi_17   # probability to be slow
-python case-outcome-kafka-processor.py bpi17 label2 localhost:9092 events_bpi_17 predictions_bpi_17  # probability to be rejected
+python case-outcome-kafka-processor.py localhost:9092 events_bpi_12 predictions_bpi_12 bpi12 label slow_probability
+python case-outcome-kafka-processor.py localhost:9092 events_bpi_17 predictions_bpi_17 bpi12 label slow_probability
+python case-outcome-kafka-processor.py localhost:9092 events_bpi_17 predictions_bpi_17 bpi12 label2 rejected_probability
 
 cd $NIRDIZATI_ROOT/PredictiveMethods/RemainingTime
-python remaining-time-kafka-processor.py bpi12 localhost:9092 bpi_12 predictions_bpi_12
-python remaining-time-kafka-processor.py bpi17 localhost:9092 bpi_17 predictions_bpi_17
+python remaining-time-kafka-processor.py localhost:9092 events_bpi_12 predictions_bpi_12 bpi12
+python remaining-time-kafka-processor.py localhost:9092 events_bpi_17 predictions_bpi_17 bpi17
 
 cd $NIRDIZATI_ROOT
 python PredictiveMethods/join-events-to-predictions.py localhost:9092 events_bpi_12 predictions_bpi_12 events_with_predictions 2  # join event + 2 predictions
@@ -85,6 +85,15 @@ NODE_ENV='development' node libs/replayer.js bpi_17
 The web browser should begin to show updates.
 
 ![Dataflow diagram](dataflow.png)
+
+### Scripted startup
+
+```sh
+cd $NIRDIZATI_ROOT
+NODE_ENV='development' NODE_PATH=. node server-kafka.js
+monitor-log.sh bpi12 localhost:9092 bpi_12 label
+monitor-log.sh bpi17 localhost:9092 bpi_17 label label2
+```
 
 ## Utilities ##
 You can monitor a topic (e.g. `events_bpi_12` below) using the following command line:
