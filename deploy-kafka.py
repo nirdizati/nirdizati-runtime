@@ -28,9 +28,10 @@ zookeeper_host = "localhost:2181"
 kafka_host = "localhost:9092"
 
 """ Derived constants """
-kafka_topics_sh = "{}/bin/kafka-topics.sh".format(kafka_root)
-case_outcome_py = "{}/PredictiveMethods/CaseOutcome/case-outcome-kafka-processor.py".format(nirdizati_root)
-remaining_time_py = "{}/PredictiveMethods/RemainingTime/remaining-time-kafka-processor.py".format(nirdizati_root)
+kafka_topics_sh                 = "{}/bin/kafka-topics.sh".format(kafka_root)
+collate_events_py               = "{}/PredictiveMethods/collate-events.py".format(nirdizati_root)
+case_outcome_py                 = "{}/PredictiveMethods/CaseOutcome/case-outcome-kafka-processor.py".format(nirdizati_root)
+remaining_time_py               = "{}/PredictiveMethods/RemainingTime/remaining-time-kafka-processor.py".format(nirdizati_root)
 join_events_with_predictions_py = "{}/PredictiveMethods/join-events-to-predictions.py".format(nirdizati_root)
 
 def delete_topics(topics):
@@ -47,12 +48,14 @@ def create_topics(topics):
 
 def create_prediction_processors(dataset, tag, outcomes):
 	pids = []
-        events_topic = "events_" + dataset
+        events_topic      = "events_" + dataset
+        prefixes_topic    = "prefixes_" + dataset
         predictions_topic = "predictions_" + dataset
+        pids.append(Popen(["python", collate_events_py, kafka_host, events_topic, prefixes_topic]))
 	for outcome in outcomes:
-		pids.append(Popen(["python", case_outcome_py, kafka_host, events_topic, predictions_topic, tag, outcome["label_col"], outcome["json_key"]]))
-	pids.append(Popen(["python", remaining_time_py, kafka_host, events_topic, predictions_topic, tag]))
-	pids.append(Popen(["python", join_events_with_predictions_py, kafka_host, events_topic, predictions_topic, "events_with_predictions", str(len(outcomes) + 1)]))
+		pids.append(Popen(["python", case_outcome_py, kafka_host, prefixes_topic, predictions_topic, tag, outcome["label_col"], outcome["json_key"]]))
+	pids.append(Popen(["python", remaining_time_py, kafka_host, prefixes_topic, predictions_topic, tag]))
+	pids.append(Popen(["python", join_events_with_predictions_py, kafka_host, prefixes_topic, predictions_topic, "events_with_predictions", str(len(outcomes) + 1)]))
 	return pids
 
 def terminate_pids(pids):
@@ -62,7 +65,7 @@ def terminate_pids(pids):
 
 
 """ Make sure we have empty Kafka topics. """
-kafka_topics = ["events_bpi_12", "events_bpi_17", "predictions_bpi_12", "predictions_bpi_17", "events_with_predictions"]
+kafka_topics = ["events_bpi_12", "events_bpi_17", "prefixes_bpi_12", "prefixes_bpi_17", "predictions_bpi_12", "predictions_bpi_17", "events_with_predictions"]
 delete_topics(kafka_topics)
 create_topics(kafka_topics)
 
