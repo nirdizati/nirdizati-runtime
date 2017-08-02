@@ -27,7 +27,7 @@ from kafka import KafkaProducer, KafkaConsumer
 from StringIO import StringIO
 
 if len(sys.argv) != 7:
-    sys.exit("Usage: python kafka-processor.py bootstrap-server:port events-topic predictions-topic dataset-name label-column-id json-column-id")
+    sys.exit("Usage: python {} bootstrap-server:port events-topic predictions-topic dataset-name label-column-id json-column-id".format(sys.argv[0]))
 
 bootstrap_server, events_topic, predictions_topic, dataset, label_col, json_col = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6]
 

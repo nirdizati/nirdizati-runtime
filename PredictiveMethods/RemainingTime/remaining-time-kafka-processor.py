@@ -27,7 +27,7 @@ from kafka import KafkaProducer, KafkaConsumer
 from StringIO import StringIO
 
 if len(sys.argv) != 5:
-    sys.exit("Usage: python test.py bootstrap-server:port events-topic predictions-topic dataset-name")
+    sys.exit("Usage: python {} bootstrap-server:port events-topic predictions-topic dataset-name".format(sys.argv[0]))
 
 bootstrap_server, events_topic, predictions_topic, dataset = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 

@@ -38,7 +38,7 @@ def reformat(x):
     return y
 
 if len(sys.argv) != 6:
-    sys.exit("Usage: python join-events-to-predictions.py bootstrap-server:port events-topic predictions-topic events-with-predictions-topic prediction-quorum")
+    sys.exit("Usage: python {} bootstrap-server:port events-topic predictions-topic events-with-predictions-topic prediction-quorum".format(sys.argv[0]))
 
 bootstrap_server, events, predictions, destination_topic, prediction_quorum = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5])
 
