@@ -35,7 +35,7 @@ cases = {}
 
 """ As events arrive on source_topic, collate case prefixes and forward them on destination_topic """
 for message in consumer:
-    event       = json.loads(message.value)[-1]
+    event       = json.loads(message.value)
     event_nr    = event.get(u'event_nr')
     sequence_nr = event.get(u'sequence_nr')
     if cases.get(sequence_nr) is None:

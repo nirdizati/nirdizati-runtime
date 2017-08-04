@@ -73,7 +73,7 @@ for message in consumer:
         cases[log][sequence_nr][event_nr].update(latest)
         if "predictions" in latest:
             cases[log][sequence_nr][event_nr]["predictions"] = fupdate(oldPredictions, latest["predictions"])
-        if "_id" in cases[log][sequence_nr][event_nr] and len(cases[log][sequence_nr][event_nr]["predictions"]) == prediction_quorum:
+        if "time" in cases[log][sequence_nr][event_nr] and len(cases[log][sequence_nr][event_nr]["predictions"]) == prediction_quorum:
             result = json.dumps(reformat(cases[log][sequence_nr][event_nr]))
             print(result)
             print

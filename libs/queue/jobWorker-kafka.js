@@ -1,104 +1,80 @@
 /*
-Copyright (c) 2016-2017 The Nirdizati Project.
-This file is part of "Nirdizati".
+ Copyright (c) 2016-2017 The Nirdizati Project.
+ This file is part of "Nirdizati".
 
-"Nirdizati" is free software; you can redistribute it and/or modify
-it under the terms of the GNU Lesser General Public License as
-published by the Free Software Foundation; either version 3 of the
-License, or (at your option) any later version.
+ "Nirdizati" is free software; you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation; either version 3 of the
+ License, or (at your option) any later version.
 
-"Nirdizati" is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty
-of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU Lesser General Public License for more details.
+ "Nirdizati" is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty
+ of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See the GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public
-License along with this program.
-If not, see <http://www.gnu.org/licenses/lgpl.html>.
-*/
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program.
+ If not, see <http://www.gnu.org/licenses/lgpl.html>.
+ */
 
 'use strict';
 
 const config = require('config'),
-	RSMQWorker = require('rsmq-worker'),
-	log = require('../utils/log')(module),
+	log = require('../utils/log.js')(module),
 	db = require('../../db'),
-	Case = require('../../db/models/case'),
 	kafka = require('kafka-node'),
-        producer = new kafka.Producer(new kafka.Client());
-
-
-const options = {
-	autostart: true,
-	timeout: 0,
-	interval: [ 0 ],
-	alwaysLogErrors: true,
-	redisPrefix: config.get('redis.connection.ns')
-};
-
-const jobWorker = new RSMQWorker(config.get('redis.jobQueue'), options);
+	consumerTopic = config.get("kafka.eventsWithPredictions"),
+	consumer = new kafka.ConsumerGroup({}, [ consumerTopic ]);
 
 module.exports = function(io) {
-	log.info(`Job worker connecting to message queue...`);
+	log.info(`UI worker connecting to topic ${consumerTopic}...`);
 
-	jobWorker.on('ready', () => {
-		log.info(`Job worker is ready for consuming...`);
+	consumer.on('error', (error) => {
+		log.error(`Error: ${error}`);
 	});
 
-	jobWorker.on('message', (message, next) => {
-		_onMessage(message, io, next);
+	consumer.on('offsetOutOfRange', (error) => {
+		log.error(`Offset out of range: ${error}`);
 	});
-};
 
-function _onMessage(message, io, next) {
-	const payload = JSON.parse(message);
-	const logName = payload.event['log'];
+	consumer.on('message', (message) => {
+		var results = JSON.parse(message.value);
+		log.info(`Event with predictions: ${JSON.stringify(results)}`);
+		var payload = results.payload;
+		var logName = payload.event['log'];
 
-	if (payload.event.last === true) {
-		log.info(`Message for last case event: ${message}`);
-		db.getSystemState(payload, updateClient('last event', io, logName));
+		db.consumeEvent(payload.event, (err) => {
+			if (err) {
+				return io.to(logName).emit('error', err);
+			}
 
-		return next();
-	}
+                        log.info("Consumed event")
 
-	db.getSystemState(payload, updateClient('event', io, logName));
+			db.handleResults(results, (err) => {
+				if (err) {
+					return io.to(logName).emit('error', err);
+				}
 
-	const caseIdField = config.get(logName)['caseIdField'];
-	Case.findOne({ case_id: payload.event[caseIdField], log: logName }, (err, doc) => {
-		if (err) {
-			log.error(`Error during finding case on message in job queue: ${err.message}`);
-			return next();
-		}
+                                log.info("Handled results")
 
-		if (!doc) {
-			log.warn(`There is no case in db with id ${payload.event[caseIdField]} in onMessage function of job worker.`);
-			return next();
-		}
-		// skip calculations if we already have newer events from the case
-		if (payload.event.event_nr < doc.trace_length) {
-			log.warn(`Skip calculations as event is out of date`);
-			return next();
-		}
-
-		log.info(`Starting calculation for next message: ${message}`);
-		producer.send([{ topic: 'events_'+logName, messages: [ JSON.stringify(payload.prefix) ]}], function(err, data) {
-                        log.info(`Forwarded from redis to kafka topic events_${logName}`);
-                        if (err) {
-                                log.error(`Error sending event: ${err.message}`);
-                        }
-                        log.info(`Producer sent event: ${JSON.stringify(data)}`); });
-
-		return next();
+				db.getSystemState(payload, updateClient('event', io, logName));
+			});
+		});
 	});
 }
 
 function updateClient(channel, io, logName) {
-	return function(err, info) {
-		if (err) {
-			return io.to(logName).emit('error', err);
+        return function(err, info) {
+                if (err) {
+                        return io.to(logName).emit('error', err);
+                }
+
+                log.info("Updated client")
+
+		if (!info) {
+			return log.warn(`Info is empty about system state for ${payload}`);
 		}
-		io.to(logName).emit(channel, info);
-	}
+
+                io.to(logName).emit(channel, info);
+        }
 }
-
-

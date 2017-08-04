@@ -78,5 +78,4 @@ server.listen(port, () => {
 
 	const io = require('./libs/socket')(server);
 	require('./libs/queue/jobWorker-kafka')(io);
-	require('./libs/queue/uiWorker')(io);
 });

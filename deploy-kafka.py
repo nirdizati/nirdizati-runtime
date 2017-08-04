@@ -18,14 +18,13 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 """
 
 from subprocess import call, Popen
-from sys import exit
+from sys import argv, exit
 from time import sleep
 
-""" Configuration parameters """
-kafka_root = "/Users/raboczi/Work/kafka-0.10.2.1-src"
-nirdizati_root = "/Users/raboczi/Work/nirdizati-runtime"
-zookeeper_host = "localhost:2181"
-kafka_host = "localhost:9092"
+if len(argv) != 5:
+	sys.exit("Usage: python {} zookeeper_server:port bootstrap_server:port kafka_root nirdizati_root".format(argv[0]))
+
+zookeeper_host, kafka_host, kafka_root, nirdizati_root = argv[1], argv[2], argv[3], argv[4]
 
 """ Derived constants """
 kafka_topics_sh                 = "{}/bin/kafka-topics.sh".format(kafka_root)
@@ -69,38 +68,38 @@ kafka_topics = ["events_bpi_12", "events_bpi_17", "prefixes_bpi_12", "prefixes_b
 delete_topics(kafka_topics)
 create_topics(kafka_topics)
 
-""" Keep track of all the subprocesses so that we can terminate them all later on. """
+""" Keep track of all the subprocesses so that we can terminate them when escaping this main loop. """
 pids = []
+try:
+	""" Start the pipeline processors """
+	slow = {
+		"label_col": "label",
+		"json_key":  "slow_probability"
+	}
+	rejected = {
+		"label_col": "label2",
+		"json_key": "rejected_probability"
+	}
+	pids += create_prediction_processors("bpi_12", "bpi12", [slow])
+	pids += create_prediction_processors("bpi_17", "bpi17", [slow, rejected])
 
-""" Start the pipeline processors """
-slow = {
-	"label_col": "label",
-	"json_key":  "slow_probability"
-}
-rejected = {
-	"label_col": "label",
-	"json_key": "rejected_probability"
-}
-pids += create_prediction_processors("bpi_12", "bpi12", [slow])
-pids += create_prediction_processors("bpi_17", "bpi17", [slow, rejected])
+	""" Start the server, then wait long enough for it to accept HTTP requests from the replayers. """
+	pids.append(Popen(["node", "server-kafka.js"]))
+	sleep(5)
 
-""" Start the server, then wait long enough for it to accept HTTP requests from the replayers. """
-pids.append(Popen(["node", "server-kafka.js"]))
-sleep(5)
+	""" The server should be accepting HTTP requests by now, so start streaming the log events to it. """
+	pids.append(Popen(["node", "libs/replayer-kafka.js"]))
+	pids.append(Popen(["node", "libs/replayer-kafka.js", "bpi_17"]))
 
-""" The server should be accepting HTTP requests by now, so start streaming the log events to it. """
-pids.append(Popen(["node", "libs/replayer.js"]))
-pids.append(Popen(["node", "libs/replayer.js", "bpi_17"]))
+	""" Wait forever, i.e. until the process is interrupted. """
+	while True:
+		sleep(86400)
 
-""" Idle until this process is interrupted.  Terminate all the subprocesses when this happens. """
-while True:
-	try:
-		sleep(60)
-	except EOFError as eofe:
-		print("Error ", repr(eofe))
-		terminate_pids(pids)
-		break
-	except KeyboardInterrupt as ki:
-		print("Interrupt ", repr(ki))
-		terminate_pids(pids)
-		break
+except EOFError as eofe:
+	print("Error ", repr(eofe))
+	terminate_pids(pids)
+
+except KeyboardInterrupt as ki:
+	print("Interrupt ", repr(ki))
+	terminate_pids(pids)
+
