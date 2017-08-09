@@ -30,6 +30,7 @@ const options = {
 	autostart: true,
 	timeout: 0,
 	interval: [ 0 ],
+	maxReceiveCount: 1,
 	alwaysLogErrors: true,
 	redisPrefix: config.get('redis.connection.ns')
 };
@@ -54,12 +55,12 @@ function _onMessage(message, io, next) {
 
 	if (payload.event.last === true) {
 		log.info(`Message for last case event: ${message}`);
-		db.getSystemState(payload, updateClient('last event', io, logName));
+		db.getSystemState(payload, false, updateClient('last event', io, logName));
 
 		return next();
 	}
 
-	db.getSystemState(payload, updateClient('event', io, logName));
+	db.getSystemState(payload, false, updateClient('event', io, logName));
 
 	const caseIdField = config.get(logName)['caseIdField'];
 	Case.findOne({ case_id: payload.event[caseIdField], log: logName }, (err, doc) => {
@@ -97,7 +98,7 @@ function _onMessage(message, io, next) {
 					return io.to(logName).emit('error', err);
 				}
 
-				db.getSystemState(payload, (err, info) => {
+				db.getSystemState(payload, false, (err, info) => {
 					if (err) {
 						return io.to(logName).emit('error', err);
 					}

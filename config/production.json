@@ -93,8 +93,8 @@
 
     "replayer": {
       "request": {
-        "hostname": "localhost",
-        "port": 8080,
+        "hostname": "nirdizati.com",
+        "port": 80,
         "path": "/event",
         "method": "POST",
         "headers": {
@@ -150,8 +150,8 @@
 
     "replayer": {
       "request": {
-        "hostname": "localhost",
-        "port": 8080,
+        "hostname": "nirdizati.com",
+        "port": 80,
         "path": "/event",
         "method": "POST",
         "headers": {
