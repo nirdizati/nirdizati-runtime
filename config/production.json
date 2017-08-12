@@ -23,7 +23,7 @@
   "replayer": {
     "log": "bpi_12",
     "request": {
-      "hostname": "localhost",
+      "hostname": "193.40.11.42",
       "port": 8080,
       "path": "/event",
       "method": "POST",
@@ -93,7 +93,7 @@
 
     "replayer": {
       "request": {
-        "hostname": "nirdizati.com",
+        "hostname": "193.40.11.42",
         "port": 80,
         "path": "/event",
         "method": "POST",
@@ -150,7 +150,7 @@
 
     "replayer": {
       "request": {
-        "hostname": "nirdizati.com",
+        "hostname": "193.40.11.42",
         "port": 80,
         "path": "/event",
         "method": "POST",
