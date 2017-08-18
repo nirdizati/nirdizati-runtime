@@ -48,7 +48,7 @@ The following script will create and start the dataflow depicted in Figure 1.
 
 ```sh
 cd $NIRDIZATI_ROOT
-NODE_ENV='development' python deploy-kafka.js localhost:2181 localhost:9092 $KAFKA_ROOT $NIRDIZATI_ROOT
+NODE_ENV='development' python deploy-kafka.py localhost:2181 localhost:9092 $KAFKA_ROOT $NIRDIZATI_ROOT
 ```
 
 Open a web browser to `http://localhost:8080`.
