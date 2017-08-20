@@ -2,7 +2,11 @@
 This branch decouples Nirdizati's predictive methods to run as Kafka processors.  This allows multiple instances of the predictive methods, and distributing them across multiple machines.
 
 ## Requirements ##
-You will need a web browser and the Dockerized instance of MongoDB from the standard distribution of Nirdizati.
+You will need a web browser and the Dockerized instance of MongoDB from the standard distribution of Nirdizati. You can create the latter by running:
+
+```sh
+docker run --name some-mongo -d -p 27017:27017 mongo
+```
 
 ## Project Setup
 Download Apache Kafka from ``https://kafka.apache.org`` to a directory of your choice henceforth called `$KAFKA_ROOT`.  Similarly, the root of the Nirdizati checkout will be called `$NIRDIZATI_ROOT`.
@@ -23,10 +27,16 @@ cd $KAFKA_ROOT
 bin/kafka-server-start.sh config/server.properties
 ```
 
-You must install the Kafka client library for Python.
+You must install the Kafka client library for Python:
 
 ```sh
 pip install kafka
+```
+
+and for Node.js:
+
+```sh
+npm install kafka-node
 ```
 
 Train the predictive methods:
@@ -39,8 +49,8 @@ python train.py bpi17 label  # generates predictive_monitor_bpi17_label.cpickle
 python train.py bpi17 label2  # generates predictive_monitor_bpi17_label2.cpickle
 
 cd PredictiveMethods/RemainingTime
-python train.py bpi12 label  # generates predictive_monitor_bpi12_label.cpickle
-python train.py bpi17 label  # generates predictive_monitor_bpi17_label.cpickle
+python train.py bpi12  # generates predictive_monitor_bpi12.cpickle
+python train.py bpi17  # generates predictive_monitor_bpi17.cpickle
 ```
 
 ## Run app ##
