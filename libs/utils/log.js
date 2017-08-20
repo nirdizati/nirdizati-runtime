@@ -32,7 +32,7 @@ function getLogger(module) {
 				level: (ENV === 'development') ? 'debug' : 'error',
 				label: path
 			}),
-    new (winston.transports.File) ({filename: 'tmp/test.log'})
+    			new (winston.transports.File) ({filename: 'tmp/test.log'})
 		]
 	});
 }
