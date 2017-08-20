@@ -31,7 +31,8 @@ function getLogger(module) {
 				colorize: true,
 				level: (ENV === 'development') ? 'debug' : 'error',
 				label: path
-			})
+			}),
+    new (winston.transports.File) ({filename: 'tmp/test.log'})
 		]
 	});
 }
