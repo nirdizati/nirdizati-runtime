@@ -14,12 +14,14 @@ docker run --name some-redis -d -p 6379:6379 redis redis-server --appendonly yes
 
 sudo pm2 delete all
 
-sudo pm2 start -f server.js -- 8080
-sudo pm2 start -f server.js -- 8081
-sudo pm2 start -f server.js -- 8082
+rm -f tmp/test.log
 
-sudo pm2 start -f libs/replayer.js -- bpi_12
-sudo pm2 start -f libs/replayer.js -- bpi_17
+sudo pm2 start -f --log-date-format="YYYY-MM-DD HH:mm:ss" server.js -- 8080
+sudo pm2 start -f --log-date-format="YYYY-MM-DD HH:mm:ss" server.js -- 8081
+sudo pm2 start -f --log-date-format="YYYY-MM-DD HH:mm:ss" server.js -- 8082
+
+sudo pm2 start -f --log-date-format="YYYY-MM-DD HH:mm:ss" libs/replayer.js -- bpi_12
+sudo pm2 start -f --log-date-format="YYYY-MM-DD HH:mm:ss" libs/replayer.js -- bpi_17
 
 # FIXME as otherwise works incorrectly
 sleep 10

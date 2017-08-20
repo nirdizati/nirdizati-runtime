@@ -89,7 +89,7 @@ function makeRequest(event) {
 	});
 
 	req.on('error', (err) => {
-		log.error(`The following error has occurred: ${err.message}`);
+		log.error(`The following error has occurred: ${err.message} ${err.stack}`);
 	});
 
 	req.write(JSON.stringify(event));
