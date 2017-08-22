@@ -1,9 +1,9 @@
-# VisualPredictiveMonitor
-A Visual Framework for Predictive Monitoring of Business Processes
+# nirdizati-runtime
+A Dashboard-based Predictive Process Monitoring Engine
 
 
 ## Requirements
-You need to have version of Node.js which supports ES6 (so at least 4.x). Also you need docker to be installed on your machine.
+You need to have Node.js v8.x as we use the latest features. Also you need docker to be installed on your machine.
 
 
 ## Project Setup ##
@@ -27,6 +27,19 @@ Execute `docker run --name some-redis -d -p 6379:6379 redis redis-server --appen
 which is used for message queue mechanism. Again if you want to enter to already running container execute 
 `docker exec -it some-redis redis-cli`
 
+If you have production process manager `pm2` installed, you can run `sh deploy.sh` script to start the whole web-application 
+including replayers of logs. 
+
+## Run app ##
+Run `NODE_ENV='development' NODE_PATH=. node server.js` for starting application server. 
+
+Run `NODE_ENV='development' node libs/replayer.js` to start replayer send events to main app server. 
+
+NOTE: In some cases you might need to use `nodejs` instead of `node`.
+
+NOTE: `NODE_ENV='development'` is needed for better logging. On a server it is recommended to us `production` mode 
+as it is faster. 
+
 ## Configurations (need to be updated)##
 You can configure an app by changing `config/default.json`.
 
@@ -41,14 +54,3 @@ You might need to configure options for `log`:
 - path (path to csv file including file itself)
 - timeField (name of event timestamp field)
 - timeFormat (format for time field. You can check explanation [here](https://momentjs.com/docs/#/parsing/string-format/))
-
-
-## Run app ##
-Run `NODE_ENV='development' NODE_PATH=. node server.js` for starting application server. 
-
-Run `NODE_ENV='development' node libs/replayer.js` to start replayer send events to main app server. 
-
-NOTE: In some cases you might need to use `nodejs` instead of `node`.
-
-NOTE: `NODE_ENV='development'` is needed for better logging. Also, if you execute in `development` mode, 
-then it will drop database and recreate queues for correct script calculation.

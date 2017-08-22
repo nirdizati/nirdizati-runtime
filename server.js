@@ -70,8 +70,7 @@ const port = process.argv[2] || config.get('app.port');
 server.listen(port, () => {
 	log.info(`Express server listening on port ${port}`);
 
-	// clean database and queue from previous runs
-	if (app.get('env') === 'development') {
+	if (config.get('app.clean')) { // clean database and queue from previous runs
 		require('./libs/utils/dbSetup')();
 		require('./libs/utils/queueSetup')();
 	}

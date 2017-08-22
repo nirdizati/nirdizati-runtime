@@ -75,7 +75,7 @@ function start(events, units) {
 		}
 
 		currentEvent = nextEvent;
-		setTimeout(replay, timeDiff);
+		return setTimeout(replay, timeDiff);
 	}
 
 	replay();
@@ -84,12 +84,12 @@ function start(events, units) {
 function makeRequest(event) {
 	const req = http.request(config.get(logName)['replayer']['request'], (res) => {
 		res.on('data', (chunk) => {
-			log.info(`The next message has been sent: ${chunk}`);
+			log.info(`The following message has been sent: ${chunk}`);
 		});
 	});
 
 	req.on('error', (err) => {
-		log.error(`The next error has been occurred: ${err.message}`);
+		log.error(`The following error has occurred: ${err.message} ${err.stack}`);
 	});
 
 	req.write(JSON.stringify(event));

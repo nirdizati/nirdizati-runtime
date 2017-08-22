@@ -589,9 +589,21 @@ select {
 }
 
 #content {
+  position: relative;
   overflow: hidden;
   background-color: #fff;
   height: inherit;
+}
+
+.first-load-spinner {
+  position: absolute;
+  background-image: url("../media/first_load_spinner.gif");
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 50;
 }
 
 .left-side,
@@ -622,11 +634,11 @@ select {
 }
 
 .navbar .main-menu {
-  height: 100%;
+  height: 52px;
+  color: #092f65;
 }
 
-.navbar .login:hover,
-.navbar .main-menu {
+.navbar .login:hover {
   color: #092f65;
   background-color: #fff;
 }
@@ -702,18 +714,16 @@ select {
   height: 35px;
   line-height: 35px;
   margin: 5px;
-  background-color: #d3d3d3;
-}
-
-.outcomeTitle,
-.parameter .prm-name span {
-  font-family: roboto sans-serif;
-  font-size: 18px;
+  background-color: #36a0dd;
 }
 
 .parameter .prm-name span {
   vertical-align: bottom;
+  font-family: roboto sans-serif;
+  font-size: 16px;
   white-space: nowrap;
+  color: #fff;
+  text-transform: uppercase;
 }
 
 .parameter .prm-value {
@@ -730,12 +740,12 @@ select {
   left: 50%;
   transform: translate(-50%,-50%);
   font-family: roboto sans-serif;
+  font-weight: 700;
 }
 
 .parameter .prm-value span.num {
   display: block;
   width: 100%;
-  font-weight: 700;
   font-size: 50px;
 }
 
@@ -745,6 +755,8 @@ select {
 
 .outcomeTitle {
   text-align: center;
+  font-family: roboto sans-serif;
+  font-size: 18px;
   padding: .5em;
   background-color: #d3d3d3;
 }

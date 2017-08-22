@@ -19,16 +19,11 @@
     "jobQueue": "jobs-queue"
   },
 
-  // topic from which uiWorker can fetch events annotated with predictions
-  "kafka": {
-    "eventsWithPredictions": "events_with_predictions",
-  },
-
   // default config for replayer; if replayer is executed with log name as param, then log specific replayer will be used
   "replayer": {
     "log": "bpi_12",
     "request": {
-      "hostname": "localhost",
+      "hostname": "193.40.11.42",
       "port": 8080,
       "path": "/event",
       "method": "POST",
@@ -98,8 +93,8 @@
 
     "replayer": {
       "request": {
-        "hostname": "localhost",
-        "port": 8080,
+        "hostname": "193.40.11.42",
+        "port": 80,
         "path": "/event",
         "method": "POST",
         "headers": {
@@ -155,8 +150,8 @@
 
     "replayer": {
       "request": {
-        "hostname": "localhost",
-        "port": 8080,
+        "hostname": "193.40.11.42",
+        "port": 80,
         "path": "/event",
         "method": "POST",
         "headers": {

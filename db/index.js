@@ -26,7 +26,7 @@ const async = require('async'),
 	Event = require('./models/event.js'),
 	db = {};
 
-db.getSystemState = function(payload, callback) {
+db.getSystemState = function(payload, isInit, callback) {
 	const logName = payload.event.log;
 
 	async.parallel({
@@ -65,12 +65,16 @@ db.getSystemState = function(payload, callback) {
 				});
 			},
 			table: (cb) => {
-				Case.find({log: logName}, (err, docs) => {
-					if (err) {
-						log.error(`Error during retrieving all cases: ${err.message}`);
-					}
-					return cb(err, docs);
-				})
+				if (isInit) {
+					Case.find({log: logName}, (err, docs) => {
+						if (err) {
+							log.error(`Error during retrieving all cases: ${err.message}`);
+						}
+						return cb(err, docs);
+					})
+				} else { // do not need the whole table if it is not 'init' event
+					return cb(null);
+				}
 			},
 			row: (cb) => {
 				if (!payload) {

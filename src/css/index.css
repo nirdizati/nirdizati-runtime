@@ -310,10 +310,21 @@ body {
     margin-left: 0%; } }
 
 #content {
+  position: relative;
   width: 100%;
   overflow: hidden;
   background-color: white;
   height: inherit; }
+
+.first-load-spinner {
+  position: absolute;
+  background-image: url(../media/first_load_spinner.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 50; }
 
 .navbar {
   height: 54px;

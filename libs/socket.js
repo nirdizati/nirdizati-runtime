@@ -66,7 +66,7 @@ function onInit(socket, logName) {
 		log.info(`Client joined ${logName} room.`);
 	}
 
-	db.getSystemState({ event: {log: socket.logName} }, (err, info) => {
+	db.getSystemState({ event: {log: socket.logName} }, true, (err, info) => {
 		if (err) {
 			return;
 		}
