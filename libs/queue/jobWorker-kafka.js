@@ -57,7 +57,7 @@ module.exports = function(io) {
 
                                 log.info("Handled results")
 
-				db.getSystemState(payload, updateClient('event', io, logName));
+				db.getSystemState(payload, false, updateClient('event', io, logName));
 			});
 		});
 	});
