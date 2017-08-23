@@ -60,4 +60,4 @@ class PredictiveMonitor():
         # predict
         predictions_proba = pred_model.predict_proba(dt_test)
         predictions_proba = np.rint(predictions_proba)
-        print(predictions_proba.item())
+        return predictions_proba.item()
