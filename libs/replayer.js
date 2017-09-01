@@ -23,6 +23,7 @@ const appRoot = require('app-root-path'),
 	config = require('config'),
 	csv = require('fast-csv'),
 	fs = require('fs'),
+	db = require('../db'),
 	moment = require('moment'),
 	http = require('http'),
 	log = require(appRoot + '/libs/utils/log.js')(module);
@@ -30,6 +31,8 @@ const appRoot = require('app-root-path'),
 const events = [];
 const logName = process.argv[2] || config.get('replayer.log');
 const stream = fs.createReadStream(config.get(logName)['path']);
+
+// var exec = require('child_process').exec, child;
 
 csv.fromStream(stream, {
 	headers: true
@@ -48,20 +51,24 @@ function start(events, units) {
 		timeAccelerator = config.get(logName)['replayer']['accelerator'];
 
 	const logLength = events.length;
-	let currentEvent = events.shift();
+        let currentEvent = events[0];
 	let timeDiff;
 	let i = 0;
 
 	function replay() {
-		log.info(`Event #${++i}`);
-		if (i > logLength) {
+		log.info(`Event #${i}`);
+                makeRequest(currentEvent);
+                
+		if (i >= logLength - 1) {
 			log.info(`Execution engine successfully replayed all events.`);
-			process.exit(0);
+                        i = -1;
+                        
+                        require('child_process').spawn('sh', ['~/git/nirdizati-runtime/libs/clean_db.sh'], {stdio: 'inherit'});
+                        
+			//process.exit(0);
 		}
-
-		makeRequest(currentEvent);
-
-		const nextEvent = events.shift();
+		
+		const nextEvent = events[++i];
 
 		if (config.get(logName)['replayer']['isTestMode']) {
 			timeDiff = config.get(logName)['replayer']['testInterval'];
