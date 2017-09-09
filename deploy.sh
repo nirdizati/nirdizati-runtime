@@ -1,5 +1,6 @@
 export NODE_ENV=production
 export NODE_PATH=.
+export SENDER_NAME=http
 
 sudo npm --loglevel=error install
 cd src

@@ -88,8 +88,8 @@ try:
 	sleep(5)
 
 	""" The server should be accepting HTTP requests by now, so start streaming the log events to it. """
-	pids.append(Popen(["node", "libs/replayer-kafka.js"]))
-	pids.append(Popen(["node", "libs/replayer-kafka.js", "bpi_17"]))
+	pids.append(Popen(["node", "libs/replayer.js"]))
+	pids.append(Popen(["node", "libs/replayer.js", "bpi_17"]))
 
 	""" Wait forever, i.e. until the process is interrupted. """
 	while True:
