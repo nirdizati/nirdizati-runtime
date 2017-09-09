@@ -415,4 +415,19 @@ function _getCaseIdField(logName) {
 	return config.get(logName)['caseIdField'];
 }
 
+db.clearFromLog = function(logName) {
+	return new Promise((resolve, reject) => {
+		async.parallel({
+				caseCleaning: (cb) => Case.remove({log: logName}, cb),
+				eventsCleaning: (cb) => Event.remove({log: logName}, cb)
+			}, (err) => {
+				if (err) {
+					return reject(err);
+				}
+				resolve(err);
+			}
+		);
+	});
+};
+
 module.exports = db;

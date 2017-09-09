@@ -21,13 +21,14 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 const appRoot = require('app-root-path'),
 	config = require('config'),
-	parse = require('csv-parse/lib/sync'),
 	fs = require('fs'),
 	moment = require('moment'),
 	http = require('http'),
 	logger = require(appRoot + '/libs/utils/log.js')(module),
 	kafka = require('kafka-node'),
-	producer = new kafka.Producer(new kafka.Client());
+	parse = require('csv-parse/lib/sync'),
+	producer = new kafka.Producer(new kafka.Client()),
+	db = require('../db');
 
 const logName = process.argv[2] || config.get('replayer.log');
 
@@ -103,14 +104,13 @@ class Replayer {
 		return timeDiff;
 	}
 
-	_restart() {
+	async _restart() {
 		clearTimeout(this.timer);
 		this.isRunning = false;
 		this.currentEventNumber = 0;
 
-		// TODO: clean database
-		// right now mimic async call
-		setTimeout(this.start.bind(this), 5000);
+		await db.clearFromLog(this.logName);
+		this.start();
 	}
 
 	pause() {
@@ -186,6 +186,3 @@ function sendToKafka(event) {
 const sender = senderFactory();
 const replayer = new Replayer(sender, logName);
 replayer.start();
-
-setTimeout(() => {replayer.pause()}, 2000);
-setTimeout(() => {replayer.resume()}, 5000);
