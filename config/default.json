@@ -2,7 +2,8 @@
   // app specific settings
   "app": {
     "port": 8080,
-    "clean": true
+    "clean": true,
+    "replayer": "http"
   },
 
   "mongoose": {
