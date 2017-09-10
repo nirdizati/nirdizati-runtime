@@ -115,7 +115,7 @@
 
   // BPI 2012 configurations
   "bpi_12": {
-    "path": "data/test_bpi12_sorted.csv",
+    "path": "data/test_bpi12_sorted_short.csv",
     "timeField": "time",
     "timeFormat": "YYYY-MM-DD HH:mm:ss",
     "caseIdField": "sequence_nr",
@@ -166,7 +166,7 @@
       },
       "accelerator": 50,
       "isTestMode": true,
-      "testInterval": 7000
+      "testInterval": 1000
     }
   }
 }

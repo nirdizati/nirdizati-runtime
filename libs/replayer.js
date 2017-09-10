@@ -19,6 +19,9 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
+// to be safe that all env variables will be loaded correctly
+require('dotenv').config();
+
 const appRoot = require('app-root-path'),
 	config = require('config'),
 	fs = require('fs'),
@@ -132,6 +135,7 @@ class Replayer {
 
 function senderFactory() {
 	const senderName = process.env.SENDER_NAME || 'kafka';
+	logger.info(`Events will be sent via: ${senderName}`);
 
 	switch(senderName) {
 		case 'http': return makeHttpRequest;
@@ -164,7 +168,7 @@ function makeHttpRequest(event) {
 }
 
 function sendToKafka(event) {
-	const event = JSON.stringify(event);
+	event = JSON.stringify(event);
 
 	return new Promise((resolve, reject) => {
 		logger.info(`Topic events_${this.logName} being sent event: ${event}`);
