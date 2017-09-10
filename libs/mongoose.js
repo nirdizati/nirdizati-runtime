@@ -21,6 +21,7 @@ const config = require('config'),
 	log = require('./utils/log')(module),
 	mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
 mongoose.connect(config.get('mongoose.uri'), config.get('mongoose.options'));
 
 mongoose.connection.on('connected', () => {
