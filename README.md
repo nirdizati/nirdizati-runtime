@@ -34,8 +34,8 @@ The latter work resulted in the creation of our sister project, [Nirdizati Train
 
 ## Project setup
 If you want to install Nirdizati Runtime on your server, please follow these steps:
-* Deploying standard version, powered by [Apache Kafka](https://kafka.apache.org)
-* Deploying minimum viable version
+* [Deploying a standard version](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/Project-setup-Kafka.md), powered by [Apache Kafka](https://kafka.apache.org)
+* [Deploying a minimum viable version](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/Project-setup-MVP.md)
 
 
 ## Development
