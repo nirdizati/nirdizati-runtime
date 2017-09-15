@@ -44,13 +44,13 @@ Train the predictive methods:
 ```sh
 cd $NIRDIZATI_ROOT
 cd PredictiveMethods/CaseOutcome
-python train.py bpi12 label  # generates predictive_monitor_bpi12_label.cpickle
-python train.py bpi17 label  # generates predictive_monitor_bpi17_label.cpickle
-python train.py bpi17 label2  # generates predictive_monitor_bpi17_label2.cpickle
+python train.py bpi12 label  # generates predictive_monitor_bpi12_label.pkl
+python train.py bpi17 label  # generates predictive_monitor_bpi17_label.pkl
+python train.py bpi17 label2  # generates predictive_monitor_bpi17_label2.pkl
 
 cd PredictiveMethods/RemainingTime
-python train.py bpi12  # generates predictive_monitor_bpi12.cpickle
-python train.py bpi17  # generates predictive_monitor_bpi17.cpickle
+python train.py bpi12  # generates predictive_monitor_bpi12.pkl
+python train.py bpi17  # generates predictive_monitor_bpi17.pkl
 ```
 
 ## Run app ##

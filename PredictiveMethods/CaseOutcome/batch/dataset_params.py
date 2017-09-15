@@ -33,7 +33,7 @@ learning_rate = {}
 
 # BPI12 parameters
 dataset = "bpi12"
-case_id_col[dataset] = "sequence_nr"
+case_id_col[dataset] = "case_id"
 event_nr_col[dataset] = "event_nr"
 label_col[dataset] = "label"
 pos_label[dataset] = "true"
@@ -49,7 +49,7 @@ learning_rate[dataset] = 0.03
 
 # BPI15 parameters
 dataset = "bpi15"
-case_id_col[dataset] = "sequence_nr"
+case_id_col[dataset] = "case_id"
 event_nr_col[dataset] = "event_nr"
 label_col[dataset] = "label"
 pos_label[dataset] = "true"
@@ -67,7 +67,7 @@ learning_rate[dataset] = 0.1
 
 # BPI17 parameters
 dataset = "bpi17"
-case_id_col[dataset] = "sequence_nr"
+case_id_col[dataset] = "case_id"
 event_nr_col[dataset] = "event_nr"
 label_col[dataset] = "label2"
 pos_label[dataset] = "true"

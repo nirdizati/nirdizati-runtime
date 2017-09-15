@@ -1,4 +1,4 @@
-export NODE_ENV=production
+export NODE_ENV=development
 export NODE_PATH=.
 
 sudo npm --loglevel=error install

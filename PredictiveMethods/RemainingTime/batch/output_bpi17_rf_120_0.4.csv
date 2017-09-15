@@ -1,4 +1,4 @@
-sequence_nr,ground_truth,predictions_true,nr_prefixes
+case_id,ground_truth,predictions_true,nr_prefixes
 c_1002567868,580622.0000,1913374.85993,1
 c_1002747267,625977.0000,2331497.84818,1
 c_100886157,2066628.0000,2077206.20568,1

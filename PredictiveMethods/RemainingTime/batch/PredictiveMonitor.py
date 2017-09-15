@@ -58,7 +58,7 @@ class PredictiveMonitor():
                 outfile_mode = 'w'
             with open(output_filename, outfile_mode) as fout:
                 if outfile_mode == 'w':
-                    fout.write("sequence_nr,ground_truth,predictions_true,nr_prefixes\n")
+                    fout.write("case_id,ground_truth,predictions_true,nr_prefixes\n")
                 for item in self.predictions:
                     fout.write("%s,%.4f,%s,%s\n" % (
                         item['case_name'], item['ground_truth'], item['prediction'], item['nr_events']))
