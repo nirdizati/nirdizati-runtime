@@ -68,4 +68,4 @@ Open a web browser to [http://localhost:8080](http://localhost:8080).
 
 The web browser should begin to show updates.
 
-![Figure 1: Dataflow diagram](nirdizati-dataflow.svg)
+![Figure 1: Dataflow diagram](nirdizati-dataflow.png)
