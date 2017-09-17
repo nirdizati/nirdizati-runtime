@@ -48,33 +48,33 @@ module.exports = function(io) {
 				return io.to(logName).emit('error', err);
 			}
 
-                        log.info("Consumed event")
+			log.info(`Consumed event ${JSON.stringify(payload.event)}`);
 
 			db.handleResults(results, (err) => {
 				if (err) {
 					return io.to(logName).emit('error', err);
 				}
 
-                                log.info("Handled results")
+				log.info("Handled results");
 
 				db.getSystemState(payload, false, updateClient('event', io, logName));
 			});
 		});
 	});
-}
+};
 
 function updateClient(channel, io, logName) {
-        return function(err, info) {
-                if (err) {
-                        return io.to(logName).emit('error', err);
-                }
+	return function(err, info) {
+		if (err) {
+				return io.to(logName).emit('error', err);
+		}
 
-                log.info("Updated client")
+		log.info("Updated client");
 
 		if (!info) {
 			return log.warn(`Info is empty about system state for ${payload}`);
 		}
 
-                io.to(logName).emit(channel, info);
-        }
+		io.to(logName).emit(channel, info);
+	}
 }

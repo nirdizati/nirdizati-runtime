@@ -424,7 +424,7 @@ db.clearFromLog = function(logName) {
 				if (err) {
 					return reject(err);
 				}
-				resolve(err);
+				resolve();
 			}
 		);
 	});

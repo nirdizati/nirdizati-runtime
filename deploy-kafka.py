@@ -88,7 +88,7 @@ try:
 	sleep(5)
 
 	""" The server should be accepting HTTP requests by now, so start streaming the log events to it. """
-	pids.append(Popen(["node", "libs/replayer.js"]))
+	pids.append(Popen(["node", "libs/replayer.js", "bpi_12"]))
 	pids.append(Popen(["node", "libs/replayer.js", "bpi_17"]))
 
 	""" Wait forever, i.e. until the process is interrupted. """

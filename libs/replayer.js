@@ -25,10 +25,9 @@ const appRoot = require('app-root-path'),
 	moment = require('moment'),
 	http = require('http'),
 	logger = require(appRoot + '/libs/utils/log.js')(module),
-	kafka = require('kafka-node'),
 	parse = require('csv-parse/lib/sync'),
-	producer = new kafka.Producer(new kafka.Client()),
-	db = require('../db');
+	kafka = require('kafka-node'),
+	producer = new kafka.Producer(new kafka.Client());
 
 const logName = process.argv[2] || config.get('replayer.log');
 
@@ -67,7 +66,12 @@ class Replayer {
 
 	async _executeCore() {
 		logger.info(`Event #${this.currentEventNumber + 1}`);
-		await this.send(this.events[this.currentEventNumber]);
+
+		try {
+			await this.send(this.events[this.currentEventNumber]);
+		} catch(err) {
+			logger.error(`Error during sending event is caught.`)
+		}
 
 		if (this.currentEventNumber + 1 >= this.logLength) {
 			logger.info(`Execution engine successfully replayed all events.`);
@@ -109,6 +113,7 @@ class Replayer {
 		this.isRunning = false;
 		this.currentEventNumber = 0;
 
+		const db = require('../db');
 		await db.clearFromLog(this.logName);
 		this.start();
 	}
@@ -130,17 +135,7 @@ class Replayer {
 	}
 }
 
-function senderFactory() {
-	const senderName = process.env.SENDER_NAME || config.get('app.replayer') || 'kafka';
-	logger.info(`Events will be sent via: ${senderName}`);
-
-	switch(senderName) {
-		case 'http': return makeHttpRequest;
-		case 'kafka': return sendToKafka;
-	}
-}
-
-function makeHttpRequest(event) {
+function httpSender(event) {
 	event = JSON.stringify(event);
 
 	return new Promise((resolve, reject) => {
@@ -164,7 +159,7 @@ function makeHttpRequest(event) {
 	});
 }
 
-function sendToKafka(event) {
+function kafkaSender(event) {
 	event = JSON.stringify(event);
 
 	return new Promise((resolve, reject) => {
@@ -180,10 +175,30 @@ function sendToKafka(event) {
 				logger.info(`Topic events_${this.logName} received event: ${JSON.stringify(data)}`);
 				return resolve(JSON.stringify(data));
 			}
-		);
+		)
 	});
 }
 
-const sender = senderFactory();
-const replayer = new Replayer(sender, logName);
-replayer.start();
+const senderName = process.env.SENDER_NAME || config.get('app.replayer') || 'kafka'; // TODO actually should come from replayer configs
+logger.info(`Events will be sent via: ${senderName}`);
+
+let replayer;
+
+switch(senderName) {
+	case 'http':
+		replayer = new Replayer(httpSender, logName);
+		replayer.start();
+		break;
+	case 'kafka':
+		producer.on('ready', () => {
+			replayer = new Replayer(kafkaSender, logName);
+			replayer.start();
+		});
+
+		producer.on('error', (err) => {
+			logger.error(err.message);
+		});
+
+		break;
+	default: throw new Error(`Requested unknown type of sender.`)
+}

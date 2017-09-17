@@ -33,13 +33,13 @@ mongoose.connection.on('error',function (err) {
 });
 
 mongoose.connection.on('disconnected', function () {
-	log.info('Mongoose disconnected');
+	log.warn('Mongoose disconnected');
 });
 
 // If the Node process ends, close the Mongoose connection
 process.on('SIGINT', function() {
 	mongoose.connection.close(function () {
-		log.info('Mongoose connection disconnected through app termination');
+		log.warn('Mongoose connection disconnected through app termination');
 		process.exit(0);
 	});
 });
