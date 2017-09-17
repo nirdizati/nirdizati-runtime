@@ -67,13 +67,13 @@ for message in consumer:
     predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=case_id_col,
                                            cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-    with open('PredictiveMethods/RemainingTime/predictive_monitor_%s.cpickle' % dataset, 'rb') as f:
+    with open('PredictiveMethods/RemainingTime/predictive_monitor_%s.pkl' % dataset, 'rb') as f:
         predictive_monitor.models = cPickle.load(f)
 
     outcome = predictive_monitor.test(test)
     output = {
         "log":         jsonValue[-1]["log"],
-        "sequence_nr": jsonValue[-1]["sequence_nr"],
+        "case_id": jsonValue[-1]["case_id"],
         "event_nr":    jsonValue[-1]["event_nr"],
         "predictions": {
             "remainingTime": outcome

@@ -1,6 +1,6 @@
 [
  {
-   "sequence_nr": "c_1243522820",
+   "case_id": "c_1243522820",
    "activity_name": "A_Create_Application",
    "Resource": "other",
    "time": "2016-10-01 00:12:27",
@@ -23,7 +23,7 @@
    "label2": "any"
  },
  {
-   "sequence_nr": "c_1243522820",
+   "case_id": "c_1243522820",
    "activity_name": "A_Concept",
    "Resource": "other",
    "time": "2016-10-01 00:12:27",
@@ -46,7 +46,7 @@
    "label2": "any"
  },
  {
-   "sequence_nr": "c_1243522820",
+   "case_id": "c_1243522820",
    "activity_name": "A_Accepted",
    "Resource": "other",
    "time": "2016-10-01 00:15:45",
@@ -69,7 +69,7 @@
    "label2": "any"
  },
  {
-   "sequence_nr": "c_1243522820",
+   "case_id": "c_1243522820",
    "activity_name": "O_Create_Offer",
    "Resource": "other",
    "time": "2016-10-01 00:19:24",
@@ -92,7 +92,7 @@
    "label2": "any"
  },
  {
-   "sequence_nr": "c_1243522820",
+   "case_id": "c_1243522820",
    "activity_name": "O_Created",
    "Resource": "other",
    "time": "2016-10-01 00:19:25",
@@ -115,7 +115,7 @@
    "label2": "any"
  },
  {
-   "sequence_nr": "c_1243522820",
+   "case_id": "c_1243522820",
    "activity_name": "O_Sent_(mail_and_online)",
    "Resource": "other",
    "time": "2016-10-01 00:19:56",

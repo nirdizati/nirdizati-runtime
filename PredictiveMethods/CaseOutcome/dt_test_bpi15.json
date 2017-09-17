@@ -1,6 +1,6 @@
 [
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "register submission date request",
    "Resource": 560741,
    "time": "2014-01-03 09:00:00",
@@ -34,7 +34,7 @@
    "remtime": 5325378
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "applicant is stakeholder",
    "Resource": 560741,
    "time": "2014-01-07 09:00:00",
@@ -68,7 +68,7 @@
    "remtime": 4979778
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "send confirmation receipt",
    "Resource": 560741,
    "time": "2014-01-07 09:00:00",
@@ -102,7 +102,7 @@
    "remtime": 4979778
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "OLO messaging active",
    "Resource": 560741,
    "time": "2014-01-07 09:00:00",
@@ -136,7 +136,7 @@
    "remtime": 4979778
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "send confirmation receipt",
    "Resource": 560741,
    "time": "2014-01-07 09:00:00",
@@ -170,7 +170,7 @@
    "remtime": 4979778
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "phase application received",
    "Resource": 560741,
    "time": "2014-01-07 09:00:00",
@@ -204,7 +204,7 @@
    "remtime": 4979778
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "enter senddate acknowledgement",
    "Resource": 560741,
    "time": "2014-01-07 20:26:00",
@@ -238,7 +238,7 @@
    "remtime": 4938618
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "forward to the competent authority",
    "Resource": 560696,
    "time": "2014-01-15 09:00:00",
@@ -272,7 +272,7 @@
    "remtime": 4288578
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "start WABOprocedure",
    "Resource": 560696,
    "time": "2014-01-15 09:00:00",
@@ -306,7 +306,7 @@
    "remtime": 4288578
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "create procedure confirmation",
    "Resource": 560696,
    "time": "2014-01-15 09:00:00",
@@ -340,7 +340,7 @@
    "remtime": 4288578
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "regular procedure without MER",
    "Resource": 560696,
    "time": "2014-01-15 09:00:00",
@@ -374,7 +374,7 @@
    "remtime": 4288578
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "enter senddate retrieve missing data",
    "Resource": 2013365,
    "time": "2014-01-16 09:00:00",
@@ -408,7 +408,7 @@
    "remtime": 4202178
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "decision keep permanently suspended",
    "Resource": 2013365,
    "time": "2014-03-05 09:00:00",
@@ -442,7 +442,7 @@
    "remtime": 54978
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "enter receipt of additional data",
    "Resource": 2013365,
    "time": "2014-03-05 09:00:00",
@@ -476,7 +476,7 @@
    "remtime": 54978
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "send confirmation receipt additional data",
    "Resource": 2013365,
    "time": "2014-03-05 09:00:00",
@@ -510,7 +510,7 @@
    "remtime": 54978
  },
  {
-   "sequence_nr": 6662344,
+   "case_id": 6662344,
    "activity_name": "MER present in supplement",
    "Resource": 2013365,
    "time": "2014-03-05 09:00:00",

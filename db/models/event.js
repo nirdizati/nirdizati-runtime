@@ -27,7 +27,7 @@ const config = require('config'),
 
 // due to strict mode all fields will be stored even if they do not specified in schema
 const eventSchema = new Schema({
-	sequence_nr: { type: String, required: true },
+	case_id: { type: String, required: true },
 	activity_name: { type: String, required: true },
 	event_nr: { type: Number, required: true },
 	last: { type: Boolean, required: true },

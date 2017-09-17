@@ -1,4 +1,4 @@
-sequence_nr,Resource,AMOUNT_REQ,proctime,time,elapsed,activity_name,label,event_nr,last,remtime,log
+case_id,Resource,AMOUNT_REQ,proctime,time,elapsed,activity_name,label,event_nr,last,remtime,log
 201608,10932,15000,270,2012-01-17 08:47:42,0,W_Fixing_incoming_lead,false,1,true,0,bpi_12
 201580,10932,5000,77,2012-01-17 08:57:56,0,W_Fixing_incoming_lead,false,1,true,0,bpi_12
 201571,10932,2000,62,2012-01-17 08:59:03,0,W_Fixing_incoming_lead,false,1,true,0,bpi_12

@@ -48,7 +48,7 @@
     "path": "data/test_bpi17_sorted.csv",
     "timeField": "time",
     "timeFormat": "YYYY-MM-DD HH:mm:ss",
-    "caseIdField": "sequence_nr",
+    "caseIdField": "case_id",
     "eventNameField": "activity_name",
 
     "ui": {
@@ -119,7 +119,7 @@
     "path": "data/test_bpi12_sorted.csv",
     "timeField": "time",
     "timeFormat": "YYYY-MM-DD HH:mm:ss",
-    "caseIdField": "sequence_nr",
+    "caseIdField": "case_id",
     "eventNameField": "activity_name",
 
     "ui": {
