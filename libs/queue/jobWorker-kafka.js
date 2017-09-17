@@ -20,7 +20,7 @@
 'use strict';
 
 const config = require('config'),
-	log = require('../utils/log.js')(module),
+	log = require('../utils/logger.js')(module),
 	db = require('../../db'),
 	kafka = require('kafka-node'),
 	consumerTopic = config.get("kafka.eventsWithPredictions"),

@@ -25,7 +25,7 @@ const async = require('async'),
 	appRoot = require('app-root-path'),
 	config = require('config'),
 	tmp = require('tmp'),
-	log = require('./utils/log')(module);
+	log = require('./utils/logger')(module);
 
 tmp.setGracefulCleanup();
 

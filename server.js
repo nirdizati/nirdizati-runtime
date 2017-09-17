@@ -25,9 +25,10 @@ const bodyParser = require('body-parser'),
 	express = require('express'),
 	http = require('http'),
 	logger = require('morgan'),
-	path = require('path');
+	path = require('path'),
+	sender = require('./libs/utils/sender');
 
-const log = require('./libs/utils/log.js')(module),
+const log = require('./libs/utils/logger.js')(module),
 	routes = require('./routes/index');
 
 const app = express();
@@ -43,7 +44,7 @@ if (app.get('env') === 'development') {
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({
-	    extended: false
+	extended: false
 }));
 
 app.use(['/'], routes);
@@ -70,11 +71,22 @@ const port = process.argv[2] || config.get('app.port');
 server.listen(port, () => {
 	log.info(`Express server listening on port ${port}`);
 
-	if (config.get('app.clean')) { // clean database and queue from previous runs
+	if (config.get('app.clean')) { // clean database from previous runs
 		require('./libs/utils/dbSetup')();
-		require('./libs/utils/queueSetup')();
 	}
 
 	const io = require('./libs/socket')(server);
-	require('./libs/queue/jobWorker')(io);
+
+	switch(sender.defineName()) {
+		case 'http':
+			if (config.get('app.clean')) { // clean queue from previous runs
+				require('./libs/utils/queueSetup')();
+			}
+			require('./libs/queue/jobWorker')(io);
+			break;
+		case 'kafka':
+			require('./libs/queue/jobWorker-kafka')(io);
+			break;
+		default: throw new Error(`Requested unknown type of sender.`)
+	}
 });

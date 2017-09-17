@@ -20,7 +20,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 'use strict';
 
 const  appRoot = require('app-root-path'),
-	log = require(appRoot + '/libs/utils/log')(module),
+	log = require(appRoot + '/libs/utils/logger')(module),
 	db = require(appRoot + '/db'),
 	uiConfigs = require('./uiConfigs');
 

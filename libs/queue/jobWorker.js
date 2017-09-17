@@ -21,7 +21,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 const config = require('config'),
 	RSMQWorker = require('rsmq-worker'),
-	log = require('../utils/log')(module),
+	log = require('../utils/logger')(module),
 	runner = require('../modelsRunner'),
 	db = require('../../db'),
 	Case = require('../../db/models/case');

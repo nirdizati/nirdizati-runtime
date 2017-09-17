@@ -23,11 +23,9 @@ const appRoot = require('app-root-path'),
 	config = require('config'),
 	fs = require('fs'),
 	moment = require('moment'),
-	http = require('http'),
-	logger = require(appRoot + '/libs/utils/log.js')(module),
+	logger = require(appRoot + '/libs/utils/logger.js')(module),
 	parse = require('csv-parse/lib/sync'),
-	kafka = require('kafka-node'),
-	producer = new kafka.Producer(new kafka.Client());
+	sender = require(appRoot + '/libs/utils/sender.js');
 
 const logName = process.argv[2] || config.get('replayer.log');
 
@@ -70,7 +68,7 @@ class Replayer {
 		try {
 			await this.send(this.events[this.currentEventNumber]);
 		} catch(err) {
-			logger.error(`Error during sending event is caught.`)
+			logger.error(`Error during sending event is caught: ${err.message}`);
 		}
 
 		if (this.currentEventNumber + 1 >= this.logLength) {
@@ -135,67 +133,25 @@ class Replayer {
 	}
 }
 
-function httpSender(event) {
-	event = JSON.stringify(event);
 
-	return new Promise((resolve, reject) => {
-		const req = http.request(
-			config.get(this.logName)['replayer']['request'],
-			(res) => {
-				res.on('data', (chunk) => {
-					logger.info(`The following message has been sent: ${event}`);
-					return resolve(chunk);
-				});
-			}
-		);
 
-		req.on('error', (err) => {
-			logger.error(`The following error has occurred: ${err.message} ${err.stack}`);
-			return reject(err);
-		});
-
-		req.write(event);
-		req.end();
-	});
-}
-
-function kafkaSender(event) {
-	event = JSON.stringify(event);
-
-	return new Promise((resolve, reject) => {
-		logger.info(`Topic events_${this.logName} being sent event: ${event}`);
-		producer.send(
-			[{ topic: `events_${this.logName}`, messages: [ event ]}],
-			(err, data) => {
-				if (err) {
-					logger.error(`Error sending event: ${err.message}`);
-					return reject(err);
-				}
-
-				logger.info(`Topic events_${this.logName} received event: ${JSON.stringify(data)}`);
-				return resolve(JSON.stringify(data));
-			}
-		)
-	});
-}
-
-const senderName = process.env.SENDER_NAME || config.get('app.replayer') || 'kafka'; // TODO actually should come from replayer configs
+const senderName = sender.defineName();
 logger.info(`Events will be sent via: ${senderName}`);
 
 let replayer;
 
 switch(senderName) {
 	case 'http':
-		replayer = new Replayer(httpSender, logName);
+		replayer = new Replayer(sender.httpSender, logName);
 		replayer.start();
 		break;
 	case 'kafka':
-		producer.on('ready', () => {
-			replayer = new Replayer(kafkaSender, logName);
+		sender.producer.on('ready', () => {
+			replayer = new Replayer(sender.kafkaSender, logName);
 			replayer.start();
 		});
 
-		producer.on('error', (err) => {
+		sender.producer.on('error', (err) => {
 			logger.error(err.message);
 		});
 

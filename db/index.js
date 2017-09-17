@@ -20,7 +20,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 'use strict';
 
 const async = require('async'),
-	log = require('../libs/utils/log')(module),
+	log = require('../libs/utils/logger')(module),
 	config = require('config'),
 	Case = require('./models/case.js'),
 	Event = require('./models/event.js'),

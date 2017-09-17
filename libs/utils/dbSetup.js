@@ -19,7 +19,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
-const log = require('./log')(module),
+const log = require('./logger')(module),
 	mongoose = require('../mongoose'),
 	async = require('async');
 

@@ -84,7 +84,7 @@ try:
 	pids += create_prediction_processors("bpi_17", "bpi17", [slow, rejected])
 
 	""" Start the server, then wait long enough for it to accept HTTP requests from the replayers. """
-	pids.append(Popen(["node", "server-kafka.js"]))
+	pids.append(Popen(["node", "server.js"]))
 	sleep(5)
 
 	""" The server should be accepting HTTP requests by now, so start streaming the log events to it. """

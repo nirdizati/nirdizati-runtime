@@ -20,7 +20,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 'use strict';
 
 const config = require('config'),
-	log = require('../utils/log')(module),
+	log = require('../utils/logger')(module),
 	RedisSMQ = require('rsmq'),
 	rsmq = new RedisSMQ(config.get('redis.connection'));
 
