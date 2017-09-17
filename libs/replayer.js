@@ -23,8 +23,9 @@ const appRoot = require('app-root-path'),
 	config = require('config'),
 	fs = require('fs'),
 	moment = require('moment'),
-	logger = require(appRoot + '/libs/utils/logger.js')(module),
-	parse = require('csv-parse/lib/sync'),
+	parse = require('csv-parse/lib/sync');
+
+const log = require(appRoot + '/libs/utils/logger.js')(module),
 	sender = require(appRoot + '/libs/utils/sender.js');
 
 const logName = process.argv[2] || config.get('replayer.log');
@@ -54,28 +55,29 @@ class Replayer {
 
 	start() {
 		if (this.isRunning) {
-			return logger.warn(`Trying to start replayer for ${this.logName} log which is in progress already.`);
+			return log.warn(`Trying to start replayer for ${this.logName} log which is in progress already.`);
 		}
 
-		logger.info(`\n\nStarting replayer for ${this.logName} log.`);
+		log.info(`\n\nStarting replayer for ${this.logName} log.`);
 		this.isRunning = true;
 		this._executeCore();
 	}
 
 	async _executeCore() {
-		logger.info(`Event #${this.currentEventNumber + 1}`);
+		log.info(`Event #${this.currentEventNumber + 1}`);
 
 		try {
 			await this.send(this.events[this.currentEventNumber]);
 		} catch(err) {
-			logger.error(`Error during sending event is caught: ${err.message}`);
+			log.error(`\nError during sending event is caught: ${err.message}. Event will be resend again in 10 sec...`);
+			return setTimeout(this._executeCore.bind(this), 10000);
 		}
 
 		if (this.currentEventNumber + 1 >= this.logLength) {
-			logger.info(`Execution engine successfully replayed all events.`);
+			log.info(`Execution engine successfully replayed all events.`);
 			const restartTime = 3000;
 
-			logger.info(`Going to restart replayer for ${this.logName} log in ${restartTime} ms.`);
+			log.info(`Going to restart replayer for ${this.logName} log in ${restartTime} ms.`);
 			this.timer = setTimeout(this._restart.bind(this), restartTime);
 			return;
 		}
@@ -98,7 +100,7 @@ class Replayer {
 
 			timeDiff = Math.round(timeDiff/this.timeAccelerator);
 			if (timeDiff < 0) {
-				logger.warn(`Events are not in chronological order. Test interval (from config) has been used instead.`);
+				log.warn(`Events are not in chronological order. Test interval (from config) has been used instead.`);
 				timeDiff = this.testInterval;
 			}
 		}
@@ -119,15 +121,15 @@ class Replayer {
 	pause() {
 		clearTimeout(this.timer);
 		this.isRunning = false;
-		logger.info(`Replayer for ${this.logName} has been paused.\n\n`);
+		log.info(`Replayer for ${this.logName} has been paused.\n\n`);
 	}
 
 	resume() {
 		if (this.isRunning) {
-			return logger.warn(`Trying to resume replayer for ${this.logName} which is in progress.`);
+			return log.warn(`Trying to resume replayer for ${this.logName} which is in progress.`);
 		}
 
-		logger.info(`Resuming replayer for ${this.logName} log.`);
+		log.info(`Resuming replayer for ${this.logName} log.`);
 		this.isRunning = true;
 		this._executeCore();
 	}
@@ -136,7 +138,7 @@ class Replayer {
 
 
 const senderName = sender.defineName();
-logger.info(`Events will be sent via: ${senderName}`);
+log.info(`Events will be sent via: ${senderName}. Log name: ${logName}`);
 
 let replayer;
 
@@ -152,7 +154,7 @@ switch(senderName) {
 		});
 
 		sender.producer.on('error', (err) => {
-			logger.error(err.message);
+			log.error(err.message);
 		});
 
 		break;

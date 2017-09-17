@@ -19,9 +19,10 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
+const async = require('async');
+
 const log = require('./logger')(module),
-	mongoose = require('../mongoose'),
-	async = require('async');
+	mongoose = require('../mongoose');
 
 module.exports = function () {
 	mongoose.connection.on('open', () => {

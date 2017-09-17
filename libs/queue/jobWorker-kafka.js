@@ -20,11 +20,12 @@
 'use strict';
 
 const config = require('config'),
-	log = require('../utils/logger.js')(module),
-	db = require('../../db'),
-	kafka = require('kafka-node'),
+	kafka = require('kafka-node');
+
+const db = require('../../db'),
 	consumerTopic = config.get("kafka.eventsWithPredictions"),
-	consumer = new kafka.ConsumerGroup({}, [ consumerTopic ]);
+	consumer = new kafka.ConsumerGroup({}, [ consumerTopic ]),
+	log = require('../utils/logger.js')(module);
 
 module.exports = function(io) {
 	log.info(`UI worker connecting to topic ${consumerTopic}...`);
@@ -34,14 +35,15 @@ module.exports = function(io) {
 	});
 
 	consumer.on('offsetOutOfRange', (error) => {
-		log.error(`Offset out of range: ${error}`);
+		log.error(`Offset out of range: ${error.message}`);
 	});
 
 	consumer.on('message', (message) => {
-		var results = JSON.parse(message.value);
+		const results = JSON.parse(message.value),
+			payload = results.payload,
+			logName = payload.event['log'];
+
 		log.info(`Event with predictions: ${JSON.stringify(results)}`);
-		var payload = results.payload;
-		var logName = payload.event['log'];
 
 		db.consumeEvent(payload.event, (err) => {
 			if (err) {

@@ -18,8 +18,9 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 */
 
 const config = require('config'),
-	log = require('./utils/logger')(module),
-	mongoose = require('mongoose');
+	mongoose = require('mongoose')
+
+const log = require('./utils/logger')(module);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.get('mongoose.uri'), config.get('mongoose.options'));

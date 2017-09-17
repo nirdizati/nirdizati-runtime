@@ -21,8 +21,9 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 const config = require('config'),
 	http = require('http'),
-	logger = require('./logger')(module),
-	kafka = require('kafka-node'),
+	kafka = require('kafka-node');
+
+const log = require('./logger')(module),
 	producer = new kafka.Producer(new kafka.Client());
 
 function defineName() {
@@ -37,14 +38,14 @@ function httpSender(event) {
 			config.get(this.logName)['replayer']['request'],
 			(res) => {
 				res.on('data', (chunk) => {
-					logger.info(`The following message has been sent: ${event}`);
+					log.info(`The following message has been sent: ${event}`);
 					return resolve(chunk);
 				});
 			}
 		);
 
 		req.on('error', (err) => {
-			logger.error(`The following error has occurred: ${err.message} ${err.stack}`);
+			log.error(`The following error has occurred: ${err.message} ${err.stack}`);
 			return reject(err);
 		});
 
@@ -57,17 +58,17 @@ function kafkaSender(event) {
 	event = JSON.stringify(event);
 
 	return new Promise((resolve, reject) => {
-		logger.info(`Topic events_${this.logName} being sent event: ${event}`);
+		log.info(`Topic events_${this.logName} being sent event: ${event}`);
 
 		producer.send(
 			[{ topic: `events_${this.logName}`, messages: [ event ]}],
 			(err, data) => {
 				if (err) {
-					logger.error(`Error sending event: ${err.message}`);
+					log.error(`Error sending event: ${err.message}`);
 					return reject(err);
 				}
 
-				logger.info(`Topic events_${this.logName} received event: ${JSON.stringify(data)}`);
+				log.info(`Topic events_${this.logName} received event: ${JSON.stringify(data)}`);
 				return resolve(JSON.stringify(data));
 			}
 		)

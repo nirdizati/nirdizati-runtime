@@ -24,21 +24,21 @@ const bodyParser = require('body-parser'),
 	config = require('config'),
 	express = require('express'),
 	http = require('http'),
-	logger = require('morgan'),
-	path = require('path'),
-	sender = require('./libs/utils/sender');
+	webLogger = require('morgan'),
+	path = require('path');
 
 const log = require('./libs/utils/logger.js')(module),
-	routes = require('./routes/index');
+	routes = require('./routes/index'),
+	sender = require('./libs/utils/sender');
 
 const app = express();
 
 app.use(favicon(path.join(__dirname, 'public', 'media', 'favicon.ico')));
 
 if (app.get('env') === 'development') {
-	app.use(logger('dev'));
+	app.use(webLogger('dev'));
 } else {
-	app.use(logger('combined'));
+	app.use(webLogger('combined'));
 }
 
 app.use(bodyParser.json());
