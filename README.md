@@ -12,7 +12,7 @@ For each case, it is also possible to visualize a range of summary statistics in
 For the ongoing cases, Nirdizati Runtime provides the predicted values of the performance indicators the user wants to predict.
 For completed cases, instead, it shows the actual values of the indicators.
 In addition to the table view, the dashboard offers other visualization options, such as pie charts for case outcomes and bar charts for case durations.
-For a more detailed description of the user interface, please refer to [this page](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/UI-Description.md).
+For a more detailed description of the user interface, please refer to [this page](https://github.com/nirdizati/nirdizati-runtime/blob/master/docs/UI-Description.md).
 
 
 ## Who is this for?
@@ -34,14 +34,14 @@ The latter work resulted in the creation of our sister project, [Nirdizati Train
 
 ## Project setup
 If you want to install Nirdizati Runtime on your server, please follow these steps:
-* [Deploying a standard version](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/Project-setup-Kafka.md), powered by [Apache Kafka](https://kafka.apache.org)
-* [Deploying a minimum viable version](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/Project-setup-MVP.md)
+* [Deploying a standard version](https://github.com/nirdizati/nirdizati-runtime/blob/master/docs/Project-setup-Kafka.md), powered by [Apache Kafka](https://kafka.apache.org)
+* [Deploying a minimum viable version](https://github.com/nirdizati/nirdizati-runtime/blob/master/docs/Project-setup-MVP.md)
 
 
 ## Development
 The Runtime component of Nirdizati is a joint effort by the [Software Engineering Research Group](http://sep.cs.ut.ee) of the University of Tartu and the [Business Process Management research group](https://www.qut.edu.au/research/research-projects/bpm) of Queensland University of Technology.
 The development is maintained by [Andrii Rozumnyi](https://www.linkedin.com/in/rozumnyi), Simon Raboczi, [Ilya Verenich](https://www.linkedin.com/in/verenich), [Marcello La Rosa](http://www.marcellolarosa.com/) and [Marlon Dumas](http://kodu.ut.ee/~dumas), among others.
-Credits also go to Alireza Ostovar, Dmitriy Velichko and Anastasiia Babash.
+Credits also go to Alireza Ostovar, Dmitriy Velichko, Anastasiia Babash and Alexey Golovin.
 
 
 ## Contributing
