@@ -30,16 +30,16 @@ print("Collating events from {} into {}".format(source_topic, destination_topic)
 consumer = KafkaConsumer(source_topic, bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
 producer = KafkaProducer(bootstrap_servers=bootstrap_server)
 
-""" This is a map keyed on string-valued sequence_nr and containing sequences of event objects """
+""" This is a map keyed on string-valued case_id and containing sequences of event objects """
 cases = {}
 
 """ As events arrive on source_topic, collate case prefixes and forward them on destination_topic """
 for message in consumer:
     event       = json.loads(message.value)
     event_nr    = event.get(u'event_nr')
-    sequence_nr = event.get(u'sequence_nr')
-    if cases.get(sequence_nr) is None:
-	cases[sequence_nr] = []
-    cases.get(sequence_nr).append(event)
-    producer.send(destination_topic, json.dumps(cases.get(sequence_nr)))
-    print("Collated event {} in {}".format(event_nr, sequence_nr))
+    case_id = event.get(u'case_id')
+    if cases.get(case_id) is None:
+	cases[case_id] = []
+    cases.get(case_id).append(event)
+    producer.send(destination_topic, json.dumps(cases.get(case_id)))
+    print("Collated event {} in {}".format(event_nr, case_id))

@@ -56,28 +56,28 @@ for message in consumer:
     }.get(message.topic)(json.loads(message.value))
 
     log         = latest["log"]
-    sequence_nr = latest["sequence_nr"]
+    case_id = latest["case_id"]
     event_nr    = latest["event_nr"]
 
     if cases.get(log) is None:
-        cases[log] = { sequence_nr: { event_nr: latest }}
-    elif cases.get(log).get(sequence_nr) is None:
-        cases[log][sequence_nr] = { event_nr: latest }
-    elif cases.get(log).get(sequence_nr).get(event_nr) is None:
-        cases[log][sequence_nr][event_nr] = latest
+        cases[log] = { case_id: { event_nr: latest }}
+    elif cases.get(log).get(case_id) is None:
+        cases[log][case_id] = { event_nr: latest }
+    elif cases.get(log).get(case_id).get(event_nr) is None:
+        cases[log][case_id][event_nr] = latest
     else:
-        if "predictions" in cases[log][sequence_nr][event_nr]:
-            oldPredictions = cases[log][sequence_nr][event_nr]["predictions"]
+        if "predictions" in cases[log][case_id][event_nr]:
+            oldPredictions = cases[log][case_id][event_nr]["predictions"]
         else:
             oldPredictions = {}
-        cases[log][sequence_nr][event_nr].update(latest)
+        cases[log][case_id][event_nr].update(latest)
         if "predictions" in latest:
-            cases[log][sequence_nr][event_nr]["predictions"] = fupdate(oldPredictions, latest["predictions"])
-        if "time" in cases[log][sequence_nr][event_nr] and len(cases[log][sequence_nr][event_nr]["predictions"]) == prediction_quorum:
-            result = json.dumps(reformat(cases[log][sequence_nr][event_nr]))
+            cases[log][case_id][event_nr]["predictions"] = fupdate(oldPredictions, latest["predictions"])
+        if "time" in cases[log][case_id][event_nr] and len(cases[log][case_id][event_nr]["predictions"]) == prediction_quorum:
+            result = json.dumps(reformat(cases[log][case_id][event_nr]))
             print(result)
             print
             producer.send(destination_topic, result)
-            cases[log][sequence_nr] = { k:v for k,v in cases[log][sequence_nr].iteritems() if k > event_nr }
-            if cases[log][sequence_nr] == {}:
-                del cases[log][sequence_nr]
+            cases[log][case_id] = { k:v for k,v in cases[log][case_id].iteritems() if k > event_nr }
+            if cases[log][case_id] == {}:
+                del cases[log][case_id]

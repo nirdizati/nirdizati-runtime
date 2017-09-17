@@ -1,4 +1,4 @@
-sequence_nr,label,predictions_true,nr_prefixes
+case_id,label,predictions_true,nr_prefixes
 c_1002567868,true,0.4224,1
 c_1002747267,true,0.3192,1
 c_100886157,false,0.3136,1

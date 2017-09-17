@@ -1,6 +1,6 @@
 [
  {
-   "sequence_nr": 201605,
+   "case_id": 201605,
    "Resource": 11189,
    "AMOUNT_REQ": 25000,
    "proctime": 173,
@@ -12,7 +12,7 @@
    "last": "false"
  },
  {
-   "sequence_nr": 201605,
+   "case_id": 201605,
    "Resource": 11000,
    "AMOUNT_REQ": 25000,
    "proctime": 852,
@@ -24,7 +24,7 @@
    "last": "false"
  },
  {
-   "sequence_nr": 201605,
+   "case_id": 201605,
    "Resource": 10809,
    "AMOUNT_REQ": 25000,
    "proctime": 1215,
@@ -36,7 +36,7 @@
    "last": "false"
  },
  {
-   "sequence_nr": 201605,
+   "case_id": 201605,
    "Resource": 10931,
    "AMOUNT_REQ": 25000,
    "proctime": 6901,
@@ -48,7 +48,7 @@
    "last": "false"
  },
  {
-   "sequence_nr": 201605,
+   "case_id": 201605,
    "Resource": 10809,
    "AMOUNT_REQ": 25000,
    "proctime": 526,
@@ -60,7 +60,7 @@
    "last": "false"
  },
  {
-   "sequence_nr": 201605,
+   "case_id": 201605,
    "Resource": 11181,
    "AMOUNT_REQ": 25000,
    "proctime": 2220,

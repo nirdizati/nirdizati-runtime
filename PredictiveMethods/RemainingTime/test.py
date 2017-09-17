@@ -56,7 +56,7 @@ else:
 predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=case_id_col,
                                        cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-with open('predictive_monitor_%s.cpickle' % dataset, 'rb') as f:
+with open('predictive_monitor_%s.pkl' % dataset, 'rb') as f:
     predictive_monitor.models = cPickle.load(f)
 
 print predictive_monitor.test(test)

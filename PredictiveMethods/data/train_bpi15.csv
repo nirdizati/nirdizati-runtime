@@ -1,4 +1,4 @@
-sequence_nr,activity_name,Resource,time,Responsible_actor,SUMleges,label,Aanleg,Bouw,Brandveilig_melding,Brandveilig_vergunning,Handelen_strijd,Kap,Milieu_melding,Milieu_neutraal_wijziging,Milieu_vergunning,Monument,Reclame,Sloop,monitoringResource,question,duration,weekday,hour,event_nr,last,remtime
+case_id,activity_name,Resource,time,Responsible_actor,SUMleges,label,Aanleg,Bouw,Brandveilig_melding,Brandveilig_vergunning,Handelen_strijd,Kap,Milieu_melding,Milieu_neutraal_wijziging,Milieu_vergunning,Monument,Reclame,Sloop,monitoringResource,question,duration,weekday,hour,event_nr,last,remtime
 3251070,enter senddate decision environmental permit,560749,2011-01-03 09:00:00,560696,0,false,0,0,0,0,0,0,0,0,0,0,0,0,560696,EMPTY,0,0,9,1,false,345600
 3251070,enter senddate procedure confirmation,560749,2011-01-03 09:00:00,560696,0,false,0,0,0,0,0,0,0,0,0,0,0,0,560696,EMPTY,0,0,9,2,false,345600
 3251070,register date environmental permit decision,560749,2011-01-03 09:00:00,560696,0,false,0,0,0,0,0,0,0,0,0,0,0,0,560696,EMPTY,0,0,9,3,false,345600

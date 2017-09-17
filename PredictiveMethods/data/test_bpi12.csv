@@ -1,4 +1,4 @@
-sequence_nr,Resource,AMOUNT_REQ,proctime,time,elapsed,activity_name,label,event_nr,last,remtime
+case_id,Resource,AMOUNT_REQ,proctime,time,elapsed,activity_name,label,event_nr,last,remtime
 201559,11169,7500,67,2012-01-17 09:00:30,0,W_Fixing_incoming_lead,false,1,false,1161671
 201559,11169,7500,650,2012-01-17 09:27:16,1606,W_Filling_in application,false,2,false,1160065
 201559,11169,7500,251,2012-01-17 09:31:48,1878,W_Calling_after_offers,false,3,false,1159793

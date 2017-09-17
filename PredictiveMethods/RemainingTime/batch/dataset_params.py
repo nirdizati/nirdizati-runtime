@@ -31,7 +31,7 @@ learning_rate = {}
 
 # BPI12 parameters
 dataset = "bpi12"
-case_id_col[dataset] = "sequence_nr"
+case_id_col[dataset] = "case_id"
 event_nr_col[dataset] = "event_nr"
 
 static_cols[dataset] = ["AMOUNT_REQ"]
@@ -45,7 +45,7 @@ learning_rate[dataset] = 0.01
 
 # BPI15 parameters
 dataset = "bpi15"
-case_id_col[dataset] = "sequence_nr"
+case_id_col[dataset] = "case_id"
 event_nr_col[dataset] = "event_nr"
 
 static_cols[dataset] = ["Responsible_actor", "SUMleges", "Aanleg", "Bouw",
@@ -61,7 +61,7 @@ learning_rate[dataset] = 0.1
 
 # BPI17 parameters
 dataset = "bpi17"
-case_id_col[dataset] = "sequence_nr"
+case_id_col[dataset] = "case_id"
 event_nr_col[dataset] = "event_nr"
 
 static_cols[dataset] = ["ApplicationType", "LoanGoal"]

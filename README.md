@@ -1,56 +1,53 @@
-# nirdizati-runtime
-A Dashboard-based Predictive Process Monitoring Engine
+# Nirdizati Runtime
+The Runtime component of Nirdizati provides a **dashboard-based predictive process monitoring engine**.
+The [dashboard](http://dashboard.nirdizati.org) is updated periodically based on incoming streams of events.
+However, unlike classical monitoring dashboards, Nirdizati does not focus on showing the current state of business process executions, but also their future state (e.g. when will each case finish).
+
+![Figure 1: User Interface](docs/nirdizati-runtime-UI.png)
 
 
-## Requirements
-You need to have Node.js v8.x as we use the latest features. Also you need docker to be installed on your machine.
+## Quick Overview
+The dashboard provides a list of both currently ongoing cases as well as completed cases.
+For each case, it is also possible to visualize a range of summary statistics including the number of events in the case, its starting time and the time when the latest event in the case has occurred.
+For the ongoing cases, Nirdizati Runtime provides the predicted values of the performance indicators the user wants to predict.
+For completed cases, instead, it shows the actual values of the indicators.
+In addition to the table view, the dashboard offers other visualization options, such as pie charts for case outcomes and bar charts for case durations.
+For a more detailed description of the user interface, please refer to [this page](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/UI-Description.md).
 
 
-## Project Setup ##
-First step is to run `npm --loglevel=error install` under main and src folders
-(as currently there are two different packages.json for back and front-end) to install all packages. 
-It is advisable to run this command after each git pull. Also, run `gulp prod` inside src folder.
+## Who is this for?
+Typical users of the Runtime component are process workers and operational managers.
+They can set some process performance targets and subscribe to a stream of warnings and alerts generated whenever these targets are predicted to be violated.
+Thus, Nirdizati will hopefully help them make informed, data-driven decisions to get a better control of the process executions.
+This is especially beneficial for business processes where process participants have more leeway to make corrective actions (for example, in a lead management process).
 
-Then you need container of mongodb database. For that run a command `docker run --name some-mongo -d -p 27017:27017 mongo`. 
-You can replace `some-mongo` as it just a name of a container.
 
-Given the name of the container is `some-mongo`, you can enter to container by running 
-`docker exec -it some-mongo mongo dev`. It opens mongo shell inside container and switches to database 'dev'.
-You don't need to create a schemas for collection (pattern of one document) as it will be created by the application. 
-For detailed syntax of mongodb you may have a look at [documentation](https://docs.some-mongo.com/manual/introduction/).
+## How do you make the predictions?
+On the backend, Nirdizati uses predictive models pre-trained using data about historical process execution.
+These models are based on the methods published in the past couple of years:
+* [Complex Symbolic Sequence Encodings for Predictive Monitoring of Business Processes](https://eprints.qut.edu.au/87229/1/BPM2014.pdf) In Proceedings of BPM'2015 ([source code](https://github.com/annitrolla/Sequence-Encodings-for-Predictive-Monitoring))
+* [Predictive Business Process Monitoring with Structured and Unstructured Data](https://kodu.ut.ee/~dumas/pubs/bpm2016predictivemonitoring.pdf) In Proceedings of BPM'2016 ([source code](https://github.com/irhete/PredictiveMonitoringWithText))
+* [A Web-Based Tool For Predictive Process Analytics](http://nirdizati.org/wp-content/uploads/thesis_Nirdizati_training.pdf) Master's thesis of Kerwin Jorbina ([source code](https://github.com/nirdizati/nirdizati-training-frontend))
 
-`docker ps -a` outputs information aboout all containers. If status for some-mongo container is "Exited", run `docker start some_mongo`
+The latter work resulted in the creation of our sister project, [Nirdizati Training](http://training.nirdizati.com/). 
 
-If for some reason you would like to remove container, run `docker rm -f container_name`
 
-Execute `docker run --name some-redis -d -p 6379:6379 redis redis-server --appendonly yes` to download redis container 
-which is used for message queue mechanism. Again if you want to enter to already running container execute 
-`docker exec -it some-redis redis-cli`
+## Project setup
+If you want to install Nirdizati Runtime on your server, please follow these steps:
+* [Deploying a standard version](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/Project-setup-Kafka.md), powered by [Apache Kafka](https://kafka.apache.org)
+* [Deploying a minimum viable version](https://github.com/nirdizati/nirdizati-runtime/blob/use-standard-notation/docs/Project-setup-MVP.md)
 
-If you have production process manager `pm2` installed, you can run `sh deploy.sh` script to start the whole web-application 
-including replayers of logs. 
 
-## Run app ##
-Run `NODE_ENV='development' NODE_PATH=. node server.js` for starting application server. 
+## Development
+The Runtime component of Nirdizati is a joint effort by the [Software Engineering Research Group](http://sep.cs.ut.ee) of the University of Tartu and the [Business Process Management research group](https://www.qut.edu.au/research/research-projects/bpm) of Queensland University of Technology.
+The development is maintained by [Andrii Rozumnyi](https://www.linkedin.com/in/rozumnyi), Simon Raboczi, [Ilya Verenich](https://www.linkedin.com/in/verenich), [Marcello La Rosa](http://www.marcellolarosa.com/) and [Marlon Dumas](http://kodu.ut.ee/~dumas), among others.
+Credits also go to Alireza Ostovar, Dmitriy Velichko and Anastasiia Babash.
 
-Run `NODE_ENV='development' node libs/replayer.js` to start replayer send events to main app server. 
 
-NOTE: In some cases you might need to use `nodejs` instead of `node`.
+## Contributing
+Nirdizati’s development team welcomes contributions from universities and companies, as well as from interested individuals!
+Good pull requests, such as patches, improvements, and new features, are a fantastic help.
+They should remain focused in scope and avoid containing unrelated commits.
+Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for Nirdizati Runtime.
+Generally, always have a related issue with discussions for whatever you are including.
 
-NOTE: `NODE_ENV='development'` is needed for better logging. On a server it is recommended to us `production` mode 
-as it is faster. 
-
-## Configurations (need to be updated)##
-You can configure an app by changing `config/default.json`.
-
-You might need to configure options for `replayer`:
-
-- accelerator (responsible for acceleration speed in comparison to real timestamps)
-- test (whether to run events with constant test interval or according to real timestamps)
-- testInterval (interval in ms between events in test mode or if difference between events is negative, i.e. log is not sorted be timestamp)
-
-You might need to configure options for `log`:
-
-- path (path to csv file including file itself)
-- timeField (name of event timestamp field)
-- timeFormat (format for time field. You can check explanation [here](https://momentjs.com/docs/#/parsing/string-format/))

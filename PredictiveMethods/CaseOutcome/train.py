@@ -60,5 +60,5 @@ predictive_monitor.train(train)
 
 models = predictive_monitor.models
 
-with open('predictive_monitor_%s_%s.cpickle' % (dataset,label_col), 'wb') as f:
+with open('predictive_monitor_%s_%s.pkl' % (dataset,label_col), 'wb') as f:
     cPickle.dump(models, f, protocol=2)
