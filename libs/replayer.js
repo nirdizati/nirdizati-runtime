@@ -75,7 +75,7 @@ class Replayer {
 
 		if (this.currentEventNumber + 1 >= this.logLength) {
 			log.info(`Execution engine successfully replayed all events.`);
-			const restartTime = 3000;
+			const restartTime = 30000;
 
 			log.info(`Going to restart replayer for ${this.logName} log in ${restartTime} ms.`);
 			this.timer = setTimeout(this._restart.bind(this), restartTime);
@@ -134,8 +134,6 @@ class Replayer {
 		this._executeCore();
 	}
 }
-
-
 
 const senderName = sender.defineName();
 log.info(`Events will be sent via: ${senderName}. Log name: ${logName}`);

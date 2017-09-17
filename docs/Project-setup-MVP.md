@@ -3,13 +3,14 @@ This is a guide on how to install the basic version of Nirdizati Runtime that do
 
 ## Requirements
 You will need the following components:
-* [Node.js](https://nodejs.org/en/), preferably one of the latest versions.
+* [Node.js](https://nodejs.org/en/), preferably version 8. If you have several node version installed use [nvm](https://github.com/creationix/nvm) for managing them.
 * Python 2.7
 * [Docker](https://www.docker.com) to create software containers
 * A web browser
  
 
 ## Project Setup
+
 First step is to run `npm --loglevel=error install` under main and src folders
 (as currently there are two different packages.json for back and front-end) to install all packages. 
 It is advisable to run this command after each git pull. Also, run `gulp prod` inside src folder.
@@ -47,6 +48,10 @@ python train.py bpi12  # generates predictive_monitor_bpi12.pkl
 python train.py bpi17  # generates predictive_monitor_bpi17.pkl
 ```
 
+If you have production process manager for Node.js [pm2](https://github.com/Unitech/pm2) installed then you can
+use `deploy.sh` script for automatic deployment. However, it is more suitable for server deployment with load balancer (using NGINX) 
+as it starts several server instances on different ports. If you run them locally, please comment unnecessary ones. 
+
 ## Run app
 Run `NODE_ENV='development' NODE_PATH=. node server.js` for starting application server. 
 
@@ -58,7 +63,8 @@ NOTE: `NODE_ENV='development'` is needed for better logging. On a server it is r
 as it is faster. 
 
 ## Configurations (needs to be updated)
-You can configure an app by changing `config/default.json`.
+You can configure an app by changing `config/default.json` if you use development mode and `config/production.json` 
+if you use production mode.
 
 You might need to configure options for `replayer`:
 

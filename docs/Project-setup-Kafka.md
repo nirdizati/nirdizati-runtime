@@ -3,7 +3,7 @@ This is a now standard version of our tool that decouples Nirdizati's predictive
 
 ## Requirements
 You will need the following components:
-* [Node.js](https://nodejs.org/en/), preferably one of the latest versions.
+* [Node.js](https://nodejs.org/en/), preferably version 8. If you have several node version installed use [nvm](https://github.com/creationix/nvm) for managing them.
 * [Python 2.7](https://www.python.org)
 * [Docker](https://www.docker.com) to create software containers
 * [Apache Kafka](https://kafka.apache.org). Download it to a directory of your choice henceforth called `$KAFKA_ROOT`

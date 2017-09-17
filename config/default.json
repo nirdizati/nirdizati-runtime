@@ -3,7 +3,7 @@
   "app": {
     "port": 8080,
     "clean": true,
-    "replayer": "http"
+    "replayer": "kafka"
   },
 
   "mongoose": {
