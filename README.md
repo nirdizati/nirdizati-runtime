@@ -3,7 +3,9 @@ The Runtime component of Nirdizati provides a **dashboard-based predictive proce
 The [dashboard](http://dashboard.nirdizati.org) is updated periodically based on incoming streams of events.
 However, unlike classical monitoring dashboards, Nirdizati does not focus on showing the current state of business process executions, but also their future state (e.g. when will each case finish).
 
-![Figure 1: User Interface](docs/nirdizati-runtime-UI.png)
+<p align="center">
+  <img alt="Nirdizati main user view" src="https://raw.githubusercontent.com/nirdizati/nirdizati-runtime/master/docs/nirdizati-runtime-UI.png">
+</p>
 
 
 ## Quick Overview
