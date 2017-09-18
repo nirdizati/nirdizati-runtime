@@ -24,7 +24,8 @@ const config = require('config');
 const log = require('../../libs/utils/logger')(module),
 	queue = require('../../libs/queue'),
 	mongoose = require('../../libs/mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	sender = require('../../libs/utils/sender');
 
 // due to strict mode all fields will be stored even if they do not specified in schema
 const eventSchema = new Schema({
@@ -37,6 +38,10 @@ const eventSchema = new Schema({
 }, {strict: false});
 
 eventSchema.post('save', (eventMessage) => {
+	if (sender.defineName() !== 'http') {
+		return;
+	}
+
 	const logName = eventMessage['log'];
 	const payload = {
 		event: eventMessage,
