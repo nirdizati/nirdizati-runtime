@@ -27,7 +27,7 @@ const log = require('./logger')(module),
 	producer = new kafka.Producer(new kafka.Client());
 
 function defineName() {
-	return process.env.SENDER_NAME || config.get('app.replayer') || 'kafka';
+	return config.get('app.replayer') || 'kafka';
 }
 
 function httpSender(event) {
