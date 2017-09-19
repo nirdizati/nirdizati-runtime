@@ -48,8 +48,6 @@ Credits also go to Alireza Ostovar, Dmitriy Velichko, Anastasiia Babash and Alex
 
 ## Contributing
 Nirdizati’s development team welcomes contributions from universities and companies, as well as from interested individuals!
-Good pull requests, such as patches, improvements, and new features, are a fantastic help.
-They should remain focused in scope and avoid containing unrelated commits.
-Please **ask first** if somebody else is already working on this or the core developers think your feature is in-scope for Nirdizati Runtime.
-Generally, always have a related issue with discussions for whatever you are including.
+Good pull requests, such as patches, improvements, and new features, are a fantastic help. In order to do that, please follow 
+[contribution quide](https://github.com/nirdizati/nirdizati-runtime/blob/master/docs/CONTRIBUTING.md).
 
