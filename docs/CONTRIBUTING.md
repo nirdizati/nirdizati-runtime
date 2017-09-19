@@ -11,7 +11,7 @@ After you installed it, you can use `Boards` tab in GitHub UI.
 ## Pull Request Process
 
 Any development is done via Pull Requests (PR) which should be linked to an issue. 
-Name of pull requests should contain number of issue followed by short description. For instance, `39-update-docs`.
+For that please use GitHub UI when create PR.
 
 All PR should be reviewed by someone from the core team before merging to master. Review should be done **after** 
 developer has requested it via GitHub UI. For that all merge conflicts should be resolved and if it involves a lot of changes, 
