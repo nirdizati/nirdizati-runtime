@@ -18,9 +18,11 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 */
 
 const config = require('config'),
-	log = require('./utils/log')(module),
-	mongoose = require('mongoose');
+	mongoose = require('mongoose')
 
+const log = require('./utils/logger')(module);
+
+mongoose.Promise = global.Promise;
 mongoose.connect(config.get('mongoose.uri'), config.get('mongoose.options'));
 
 mongoose.connection.on('connected', () => {
@@ -32,13 +34,13 @@ mongoose.connection.on('error',function (err) {
 });
 
 mongoose.connection.on('disconnected', function () {
-	log.info('Mongoose disconnected');
+	log.warn('Mongoose disconnected');
 });
 
 // If the Node process ends, close the Mongoose connection
 process.on('SIGINT', function() {
 	mongoose.connection.close(function () {
-		log.info('Mongoose connection disconnected through app termination');
+		log.warn('Mongoose connection disconnected through app termination');
 		process.exit(0);
 	});
 });

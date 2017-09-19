@@ -21,77 +21,140 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 const appRoot = require('app-root-path'),
 	config = require('config'),
-	csv = require('fast-csv'),
 	fs = require('fs'),
 	moment = require('moment'),
-	http = require('http'),
-	log = require(appRoot + '/libs/utils/log.js')(module);
+	parse = require('csv-parse/lib/sync');
 
-const events = [];
+const log = require(appRoot + '/libs/utils/logger.js')(module),
+	sender = require(appRoot + '/libs/utils/sender.js');
+
 const logName = process.argv[2] || config.get('replayer.log');
-const stream = fs.createReadStream(config.get(logName)['path']);
 
-csv.fromStream(stream, {
-	headers: true
-}).
-on('data', (event) => {
-	events.push(event);
-}).
-on('end', () => {
-	log.info(`All events have been uploaded. Total number of events in log: ${events.length}`);
-	start(events, 'milliseconds');
-});
+class Replayer {
+	constructor(sender, logName, units) {
+		this.logName = logName;
+		this.units = units || 'milliseconds';
+		this.send = sender.bind(this);
 
-function start(events, units) {
-	const timeFormat = config.get(logName)['timeFormat'],
-		timeField = config.get(logName)['timeField'],
-		timeAccelerator = config.get(logName)['replayer']['accelerator'];
+		// configuration values
+		this.timeFormat = config.get(this.logName)['timeFormat'];
+		this.timeField = config.get(this.logName)['timeField'];
+		this.timeAccelerator = config.get(this.logName)['replayer']['accelerator'];
+		this.isTestMode = config.get(this.logName)['replayer']['isTestMode'];
+		this.testInterval = config.get(this.logName)['replayer']['testInterval'];
+		const logPath = config.get(this.logName)['path'];
 
-	const logLength = events.length;
-	let currentEvent = events.shift();
-	let timeDiff;
-	let i = 0;
+		this.events = parse(fs.readFileSync(logPath, 'utf8'), {columns: true});
+		this.logLength = this.events.length;
 
-	function replay() {
-		log.info(`Event #${++i}`);
-		if (i > logLength) {
-			log.info(`Execution engine successfully replayed all events.`);
-			process.exit(0);
+		// Replayer state
+		this.currentEventNumber = 0;
+		this.timer = null;
+		this.isRunning = false
+	}
+
+	start() {
+		if (this.isRunning) {
+			return log.warn(`Trying to start replayer for ${this.logName} log which is in progress already.`);
 		}
 
-		makeRequest(currentEvent);
+		log.info(`\n\nStarting replayer for ${this.logName} log.`);
+		this.isRunning = true;
+		this._executeCore();
+	}
 
-		const nextEvent = events.shift();
+	async _executeCore() {
+		log.info(`Event #${this.currentEventNumber + 1}`);
 
-		if (config.get(logName)['replayer']['isTestMode']) {
-			timeDiff = config.get(logName)['replayer']['testInterval'];
+		try {
+			await this.send(this.events[this.currentEventNumber]);
+		} catch(err) {
+			log.error(`\nError during sending event is caught: ${err.message}. Event will be resend again in 10 sec...`);
+			return setTimeout(this._executeCore.bind(this), 10000);
+		}
+
+		if (this.currentEventNumber + 1 >= this.logLength) {
+			log.info(`Execution engine successfully replayed all events.`);
+			const restartTime = 30000;
+
+			log.info(`Going to restart replayer for ${this.logName} log in ${restartTime} ms.`);
+			this.timer = setTimeout(this._restart.bind(this), restartTime);
+			return;
+		}
+
+		const timeDiff = this._calculateTimeDifference();
+		++this.currentEventNumber;
+		this.timer = setTimeout(this._executeCore.bind(this), timeDiff);
+	}
+
+	_calculateTimeDifference() {
+		let timeDiff;
+		const currentEvent = this.events[this.currentEventNumber];
+		const nextEvent = this.events[this.currentEventNumber + 1];
+
+		if (this.isTestMode) {
+			timeDiff = this.testInterval;
 		} else {
-			timeDiff = moment(nextEvent[timeField], timeFormat).diff(moment(currentEvent[timeField], timeFormat), units);
-			timeDiff = Math.round(timeDiff/timeAccelerator);
+			timeDiff = moment(nextEvent[this.timeField], this.timeFormat)
+				.diff(moment(currentEvent[this.timeField], this.timeFormat), this.units);
+
+			timeDiff = Math.round(timeDiff/this.timeAccelerator);
 			if (timeDiff < 0) {
-				log.warn(`Events are not in chronological order. Test interval has been used instead.`);
-				timeDiff = config.get(logName)['replayer']['testInterval'];
+				log.warn(`Events are not in chronological order. Test interval (from config) has been used instead.`);
+				timeDiff = this.testInterval;
 			}
 		}
 
-		currentEvent = nextEvent;
-		return setTimeout(replay, timeDiff);
+		return timeDiff;
 	}
 
-	replay();
+	async _restart() {
+		clearTimeout(this.timer);
+		this.isRunning = false;
+		this.currentEventNumber = 0;
+
+		const db = require('../db');
+		await db.clearFromLog(this.logName);
+		this.start();
+	}
+
+	pause() {
+		clearTimeout(this.timer);
+		this.isRunning = false;
+		log.info(`Replayer for ${this.logName} has been paused.\n\n`);
+	}
+
+	resume() {
+		if (this.isRunning) {
+			return log.warn(`Trying to resume replayer for ${this.logName} which is in progress.`);
+		}
+
+		log.info(`Resuming replayer for ${this.logName} log.`);
+		this.isRunning = true;
+		this._executeCore();
+	}
 }
 
-function makeRequest(event) {
-	const req = http.request(config.get(logName)['replayer']['request'], (res) => {
-		res.on('data', (chunk) => {
-			log.info(`The following message has been sent: ${chunk}`);
+const senderName = sender.defineName();
+log.info(`Events will be sent via: ${senderName}. Log name: ${logName}`);
+
+let replayer;
+
+switch(senderName) {
+	case 'http':
+		replayer = new Replayer(sender.httpSender, logName);
+		replayer.start();
+		break;
+	case 'kafka':
+		sender.producer.on('ready', () => {
+			replayer = new Replayer(sender.kafkaSender, logName);
+			replayer.start();
 		});
-	});
 
-	req.on('error', (err) => {
-		log.error(`The following error has occurred: ${err.message} ${err.stack}`);
-	});
+		sender.producer.on('error', (err) => {
+			log.error(err.message);
+		});
 
-	req.write(JSON.stringify(event));
-	req.end();
+		break;
+	default: throw new Error(`Requested unknown type of sender.`)
 }

@@ -24,26 +24,27 @@ const bodyParser = require('body-parser'),
 	config = require('config'),
 	express = require('express'),
 	http = require('http'),
-	logger = require('morgan'),
+	webLogger = require('morgan'),
 	path = require('path');
 
-const log = require('./libs/utils/log.js')(module),
-	routes = require('./routes/index');
+const log = require('./libs/utils/logger.js')(module),
+	routes = require('./routes/index'),
+	sender = require('./libs/utils/sender');
 
 const app = express();
 
 app.use(favicon(path.join(__dirname, 'public', 'media', 'favicon.ico')));
 
 if (app.get('env') === 'development') {
-	app.use(logger('dev'));
+	app.use(webLogger('dev'));
 } else {
-	app.use(logger('combined'));
+	app.use(webLogger('combined'));
 }
 
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({
-	    extended: false
+	extended: false
 }));
 
 app.use(['/'], routes);
@@ -70,11 +71,22 @@ const port = process.argv[2] || config.get('app.port');
 server.listen(port, () => {
 	log.info(`Express server listening on port ${port}`);
 
-	if (config.get('app.clean')) { // clean database and queue from previous runs
+	if (config.get('app.clean')) { // clean database from previous runs
 		require('./libs/utils/dbSetup')();
-		require('./libs/utils/queueSetup')();
 	}
 
 	const io = require('./libs/socket')(server);
-	require('./libs/queue/jobWorker')(io);
+
+	switch(sender.defineName()) {
+		case 'http':
+			if (config.get('app.clean')) { // clean queue from previous runs
+				require('./libs/utils/queueSetup')();
+			}
+			require('./libs/queue/jobWorker')(io);
+			break;
+		case 'kafka':
+			require('./libs/queue/jobWorker-kafka')(io);
+			break;
+		default: throw new Error(`Requested unknown type of sender.`)
+	}
 });

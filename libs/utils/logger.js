@@ -20,6 +20,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 'use strict';
 
 const winston = require('winston');
+
 const ENV = process.env.NODE_ENV;
 
 function getLogger(module) {

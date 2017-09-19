@@ -2,7 +2,8 @@
   // app specific settings
   "app": {
     "port": 8080,
-    "clean": true
+    "clean": true,
+    "replayer": "kafka"
   },
 
   "mongoose": {
@@ -166,7 +167,7 @@
       },
       "accelerator": 50,
       "isTestMode": true,
-      "testInterval": 7000
+      "testInterval": 5000
     }
   }
 }

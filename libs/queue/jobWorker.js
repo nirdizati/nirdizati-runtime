@@ -20,11 +20,12 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 'use strict';
 
 const config = require('config'),
-	RSMQWorker = require('rsmq-worker'),
-	log = require('../utils/log')(module),
-	runner = require('../modelsRunner'),
-	db = require('../../db'),
-	Case = require('../../db/models/case');
+	RSMQWorker = require('rsmq-worker');
+
+const db = require('../../db'),
+	Case = require('../../db/models/case'),
+	log = require('../utils/logger')(module),
+	runner = require('../modelsRunner');
 
 const options = {
 	autostart: true,
@@ -50,8 +51,8 @@ module.exports = function(io) {
 };
 
 function _onMessage(message, io, next) {
-	const payload = JSON.parse(message);
-	const logName = payload.event['log'];
+	const payload = JSON.parse(message),
+		logName = payload.event['log'];
 
 	if (payload.event.last === true) {
 		log.info(`Message for last case event: ${message}`);

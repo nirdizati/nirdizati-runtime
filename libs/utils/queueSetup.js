@@ -20,8 +20,9 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 'use strict';
 
 const config = require('config'),
-	log = require('./log')(module),
-	RedisSMQ = require('rsmq'),
+	RedisSMQ = require('rsmq');
+
+const log = require('./logger')(module),
 	rsmq = new RedisSMQ(config.get('redis.connection'));
 
 function setupQueue(queueName, cb) {
@@ -33,7 +34,7 @@ function setupQueue(queueName, cb) {
 function _createQueue(queueName, cb) {
 	rsmq.createQueue({qname: queueName}, function (err, resp) {
 		if (err) {
-			log.error(`Error during ${queueName} creation: ${err.message}`);
+			log.warn(`Error during ${queueName} creation: ${err.message}`);
 			return cb(null); // to continue execution
 		}
 
@@ -47,7 +48,7 @@ function _createQueue(queueName, cb) {
 function _deleteQueue(queueName, cb) {
 	rsmq.deleteQueue({qname: queueName}, function (err, resp) {
 		if (err) {
-			log.error(`Error during ${queueName} deletion: ${err.message}`);
+			log.warn(`Error during ${queueName} deletion: ${err.message}`);
 			return cb(err);
 		}
 

@@ -19,13 +19,14 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
-const async = require('async'),
+const appRoot = require('app-root-path'),
+	async = require('async'),
+	config = require('config'),
 	execFile = require('child_process').execFile,
 	fs = require('fs'),
-	appRoot = require('app-root-path'),
-	config = require('config'),
-	tmp = require('tmp'),
-	log = require('./utils/log')(module);
+	tmp = require('tmp');
+
+const log = require('./utils/logger')(module);
 
 tmp.setGracefulCleanup();
 

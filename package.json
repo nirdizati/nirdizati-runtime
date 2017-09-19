@@ -10,16 +10,11 @@
     "async": "^2.3.0",
     "body-parser": "~1.15.1",
     "config": "^1.24.0",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
-    "ejs": "^2.5.5",
+    "csv-parse": "^1.2.1",
     "express": "~4.13.4",
-    "fast-csv": "^2.3.0",
-    "jade": "~1.11.0",
     "kafka-node": "1.6.2",
     "moment": "^2.17.1",
-    "mongodb": "^2.2.21",
-    "mongoose": "^4.8.2",
+    "mongoose": "~4.10.8",
     "morgan": "~1.7.0",
     "request": "^2.79.0",
     "rsmq": "^0.7.2",
@@ -29,9 +24,5 @@
     "tmp": "0.0.31",
     "winston": "^2.3.0"
   },
-  "devDependencies": {
-    "eslint": "^4.4.1",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-plugin-import": "^2.7.0"
-  }
+  "devDependencies": {}
 }

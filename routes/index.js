@@ -19,10 +19,10 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
-const config = require('config'),
-	path = require('path'),
-	router = require('express').Router(),
-	db = require('../db');
+const path = require('path'),
+	router = require('express').Router();
+
+const db = require('../db');
 
 /* POST handle incoming event */
 router.post('/event', function(req, res) {

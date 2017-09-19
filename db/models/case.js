@@ -19,8 +19,7 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
-const config = require('config'),
-	log = require('../../libs/utils/log')(module),
+const log = require('../../libs/utils/logger')(module),
 	mongoose = require('../../libs/mongoose'),
 	Schema = mongoose.Schema;
 
