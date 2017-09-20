@@ -18,7 +18,7 @@ developer has requested it via GitHub UI. For that all merge conflicts should be
 master should be merged into this branch. 
  
 Reviewer is responsible to test PR changes and check whether issue has been completely fulfilled. 
-When review approved changes, one of the core developers should merge it to master.
+When changes are approved, developer of PR should merge it into master unless agreed something else between developer and reviewer.
 
 ## Code Style Guideline
 
