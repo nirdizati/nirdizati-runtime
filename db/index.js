@@ -423,8 +423,10 @@ db.clearFromLog = function(logName) {
 				eventsCleaning: (cb) => Event.remove({log: logName}, cb)
 			}, (err) => {
 				if (err) {
-					return reject(err);
+					log.error(`Error has occurred while cleaning db from ${logName} log: ${err.message}`);
+					reject(err);
 				}
+				log.info(`Data base has been cleaned successfully from ${logName} log`);
 				resolve();
 			}
 		);
