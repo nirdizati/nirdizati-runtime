@@ -29,7 +29,7 @@ const config = require('config'),
 
 // just for testing
 const guest = {
-	email: 'nirdizati',
+	email: 'guest@nirdizati.com',
 	password: 'nirdizati',
 	id: 1
 };
@@ -38,6 +38,11 @@ const guest = {
 passport.use(new LocalStrategy(
 	{usernameField: 'email'},
 	(email, password, done) => {
+		// let's check credentials for hardcoded user
+		if (guest.email !== email || guest.password !== password) {
+			return done(null, false);
+		}
+
 		return done(null, guest)
 	})
 );
@@ -50,6 +55,10 @@ passport.serializeUser((user, cb) => cb(null, user.id));
 passport.deserializeUser(
 	(id, cb) => {
 		// TODO implement logic to find user in db by id and return it via cb
+
+		if (id !== guest.id) {
+			return cb(new Error(`User has invalid session data.`))
+		}
 
 		cb(null, guest);
 	}
