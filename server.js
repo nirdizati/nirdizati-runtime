@@ -34,8 +34,13 @@ const log = require('./libs/utils/logger.js')(module),
 	routes = require('./routes/index');
 
 const app = express();
-app.use(helmet()); // provides some security protection
-app.use(favicon(path.join(__dirname, 'public', 'media', 'favicon.ico')));
+
+// provides some security protection
+app.use(helmet({
+	frameguard: {
+		action: 'deny' // disallow putting site in iframe to prevent clickjacking attack
+	}
+}));
 
 if (app.get('env') === 'development') {
 	app.use(webLogger('dev'));
@@ -43,6 +48,7 @@ if (app.get('env') === 'development') {
 	app.use(webLogger('combined'));
 }
 
+app.use(favicon(path.join(__dirname, 'public', 'media', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
