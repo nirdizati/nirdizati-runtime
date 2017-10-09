@@ -1,4 +1,6 @@
 # Nirdizati Runtime
+
+[![Join the chat at https://gitter.im/nirdizati/nirdizati-runtime](https://badges.gitter.im/nirdizati/nirdizati-runtime.svg)](https://gitter.im/nirdizati/nirdizati-runtime?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 The Runtime component of Nirdizati provides a **dashboard-based predictive process monitoring engine**.
 The [dashboard](http://dashboard.nirdizati.org) is updated periodically based on incoming streams of events.
 However, unlike classical monitoring dashboards, Nirdizati does not focus on showing the current state of business process executions, but also their future state (e.g. when will each case finish).
