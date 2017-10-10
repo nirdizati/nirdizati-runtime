@@ -34,6 +34,7 @@ test = pd.read_csv('%s' % testSet)
 
 case_id_col = dataset_params.case_id_col[dataset]
 event_nr_col = dataset_params.event_nr_col[dataset]
+timestamp_col = "time"
 
 static_cols = dataset_params.static_cols[dataset]
 dynamic_cols = dataset_params.dynamic_cols[dataset]
@@ -54,6 +55,10 @@ elif cls_method == "gbm":
 else:
     print("Classifier method not known")
 
+def get_last_timestamp(group):
+    group = group.sort_values(timestamp_col, ascending=True)
+    return group[timestamp_col].iloc[-1]
+
 predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=case_id_col,
                                        cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
@@ -63,5 +68,10 @@ with open('predictive_monitor_%s.pkl' % dataset, 'rb') as f:
 nr_unique_cases = len(test.groupby(case_id_col).nunique()) + 1
 tqdm_pandas(tqdm(range(1,nr_unique_cases)))
 results = test.groupby(case_id_col).progress_apply(predictive_monitor.test)
-res = pd.DataFrame({case_id_col:results.index, 'predicted-remtime':results.values})
-res.to_csv("results_%s_remtime.csv"%dataset, index=False)
+last_timestamps = test.groupby(case_id_col).apply(get_last_timestamp)
+results = pd.DataFrame({case_id_col:results.index, 'predicted-remtime':results.values})
+last_timestamps = pd.DataFrame({case_id_col:last_timestamps.index, 'last-timestamp':last_timestamps.values})
+df = pd.merge(results, last_timestamps, on=case_id_col)
+df['predicted-completion'] = pd.to_datetime(df['last-timestamp']) + pd.to_timedelta(df['predicted-remtime'], unit='s')
+df = df.drop('last-timestamp', axis=1)
+df.to_csv("results_%s_remtime.csv"%dataset, index=False)
