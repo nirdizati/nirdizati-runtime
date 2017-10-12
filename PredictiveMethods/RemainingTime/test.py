@@ -20,7 +20,6 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 from PredictiveMonitor import PredictiveMonitor
 import pandas as pd
 import sys
-import batch.dataset_params as dataset_params
 import cPickle
 
 if len(sys.argv) != 3:
@@ -29,26 +28,28 @@ if len(sys.argv) != 3:
 testPrefix = sys.argv[1]
 dataset = sys.argv[2]
 
+dataset_params = pd.read_json("../data/dataset_params.json", orient="index", typ="series")
 test = pd.read_json('%s' % testPrefix, orient='records')
 
-case_id_col = dataset_params.case_id_col[dataset]
-event_nr_col = dataset_params.event_nr_col[dataset]
+case_id_col = dataset_params[dataset][u'case_id_col']
+event_nr_col = dataset_params[dataset][u'event_nr_col']
 
-static_cols = dataset_params.static_cols[dataset]
-dynamic_cols = dataset_params.dynamic_cols[dataset]
-cat_cols = dataset_params.cat_cols[dataset]
+static_cols = dataset_params[dataset][u'RemainingTime'][u'static_cols']
+dynamic_cols = dataset_params[dataset][u'RemainingTime'][u'dynamic_cols']
+cat_cols = dataset_params[dataset][u'RemainingTime'][u'cat_cols']
 
 encoder_kwargs = {"event_nr_col": event_nr_col, "static_cols": static_cols, "dynamic_cols": dynamic_cols,
                   "cat_cols": cat_cols, "fillna": True, "random_state": 22}
 
-cls_method = dataset_params.cls_method[dataset]
+cls_method = dataset_params[dataset][u'RemainingTime'][u'cls_method']
 
 if cls_method == "rf":
-    cls_kwargs = {"n_estimators": dataset_params.n_estimators[dataset],
+    cls_kwargs = {"n_estimators": dataset_params[dataset][u'RemainingTime'][u'n_estimators'],
+                  "max_features": dataset_params[dataset][u'RemainingTime'][u'max_features'],
                   "random_state": 22}
 elif cls_method == "gbm":
-    cls_kwargs = {"n_estimators": dataset_params.n_estimators[dataset],
-                  "learning_rate": dataset_params.learning_rate[dataset],
+    cls_kwargs = {"n_estimators": dataset_params[dataset][u'RemainingTime'][u'n_estimators'],
+                  "learning_rate": dataset_params[dataset][u'RemainingTime'][u'learning_rate'],
                   "random_state": 22}
 else:
     print("Classifier method not known")
