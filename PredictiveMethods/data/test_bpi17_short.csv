@@ -1,0 +1,45 @@
+case_id,activity_name,Resource,time,ApplicationType,LoanGoal,label,Action,CreditScore,EventOrigin,FirstWithdrawalAmount,NumberOfTerms,OfferedAmount,activity_duration,duration,hour,event_nr,last,remtime,label2
+c_1002567868,A_Create_Application,User_1,2016-12-17 02:15:51,New credit,Car,true,Created,missing,Application,0.0,0,0,0.0,0.0,2,1,false,580622,False
+c_1002567868,A_Submitted,User_1,2016-12-17 02:15:52,New credit,Car,true,statechange,missing,Application,0.0,0,0,0.0,0.0166,2,2,false,580621,False
+c_1002567868,W_Handle_leads,User_49,2016-12-17 03:02:27,New credit,Car,true,Deleted,missing,Workflow,0.0,0,0,1.8257166667,46.5765166667,3,3,false,577826,False
+c_1002567868,A_Concept,User_49,2016-12-17 03:02:27,New credit,Car,true,statechange,missing,Application,0.0,0,0,0.0,3.33333333333e-05,3,4,false,577826,False
+c_1002567868,A_Accepted,other,2016-12-17 04:28:49,New credit,Car,true,statechange,missing,Application,0.0,0,0,0.0,86.3813166667,4,5,false,572644,False
+c_1002567868,O_Create_Offer,other,2016-12-17 04:31:55,New credit,Car,true,Created,0,Offer,6000.0,22,6000,0.0,3.0948666667,4,6,false,572458,False
+c_1002567868,O_Created,other,2016-12-17 04:31:56,New credit,Car,true,statechange,0,Offer,6000.0,22,6000,0.0,0.0094833333,4,7,false,572457,False
+c_1002567868,O_Sent_(mail_and_online),other,2016-12-17 04:32:03,New credit,Car,true,statechange,0,Offer,6000.0,22,6000,0.0,0.1258333333,4,8,false,572450,False
+c_1002567868,A_Complete,other,2016-12-17 04:32:03,New credit,Car,true,statechange,0,Application,6000.0,22,6000,0.0,3.33333333333e-05,4,9,false,572450,False
+c_1002567868,A_Validating,User_123,2016-12-23 18:01:05,New credit,Car,true,statechange,0,Application,6000.0,22,6000,0.0,9449.03041667,18,10,false,5508,False
+c_1002567868,O_Returned,User_123,2016-12-23 18:01:26,New credit,Car,true,statechange,0,Offer,6000.0,22,6000,0.0,0.3551833333,18,11,false,5487,False
+c_1002567868,A_Denied,other,2016-12-23 19:32:53,New credit,Car,true,statechange,0,Application,6000.0,22,6000,0.0,91.4345666667,19,12,false,0,False
+c_1002567868,O_Refused,other,2016-12-23 19:32:53,New credit,Car,true,statechange,0,Offer,6000.0,22,6000,0.0,0.00035,19,13,false,0,False
+c_1002747267,A_Create_Application,User_1,2016-10-10 18:27:48,New credit,Home improvement,true,Created,missing,Application,0.0,0,0,0.0,0.0,18,1,false,625977,False
+c_1002747267,A_Submitted,User_1,2016-10-10 18:27:49,New credit,Home improvement,true,statechange,missing,Application,0.0,0,0,0.0,0.0127,18,2,false,625976,False
+c_1002747267,A_Concept,User_1,2016-10-10 18:28:28,New credit,Home improvement,true,statechange,missing,Application,0.0,0,0,0.0,0.65655,18,3,false,625937,False
+c_1002747267,A_Accepted,other,2016-10-11 21:55:32,New credit,Home improvement,true,statechange,missing,Application,0.0,0,0,0.0,1647.0626,21,4,false,527113,False
+c_1002747267,O_Create_Offer,other,2016-10-11 21:58:19,New credit,Home improvement,true,Created,0,Offer,15000.0,48,15000,0.0,2.7918166667,21,5,false,526946,False
+c_1002747267,O_Created,other,2016-10-11 21:58:20,New credit,Home improvement,true,statechange,0,Offer,15000.0,48,15000,0.0,0.0108166667,21,6,false,526945,False
+c_1002747267,O_Sent_(mail_and_online),other,2016-10-11 22:01:31,New credit,Home improvement,true,statechange,0,Offer,15000.0,48,15000,0.0,3.1744333333,22,7,false,526754,False
+c_1002747267,W_Complete_application,other,2016-10-11 22:01:31,New credit,Home improvement,true,Deleted,0,Workflow,15000.0,48,15000,12.6277,0.0002,22,8,false,526754,False
+c_1002747267,A_Complete,other,2016-10-11 22:01:31,New credit,Home improvement,true,statechange,0,Application,15000.0,48,15000,0.0,3.33333333333e-05,22,9,false,526754,False
+c_1002747267,A_Validating,User_123,2016-10-14 21:55:15,New credit,Home improvement,true,statechange,0,Application,15000.0,48,15000,0.0,4313.74643333,21,10,false,267930,False
+c_1002747267,O_Returned,User_123,2016-10-14 21:55:24,New credit,Home improvement,true,statechange,0,Offer,15000.0,48,15000,0.0,0.1484833333,21,11,false,267921,False
+c_1002747267,A_Denied,other,2016-10-18 00:20:44,New credit,Home improvement,true,statechange,0,Application,15000.0,48,15000,0.0,4465.3361,0,12,false,1,False
+c_1002747267,O_Refused,other,2016-10-18 00:20:45,New credit,Home improvement,true,statechange,0,Offer,15000.0,48,15000,0.0,0.0004833333,0,13,false,0,False
+c_100886157,A_Create_Application,User_1,2016-11-12 01:56:35,New credit,other,false,Created,missing,Application,0.0,0,0,0.0,0.0,1,1,false,2066628,False
+c_100886157,A_Submitted,User_1,2016-11-12 01:56:36,New credit,other,false,statechange,missing,Application,0.0,0,0,0.0,0.0232833333,1,2,false,2066627,False
+c_100886157,A_Concept,User_1,2016-11-12 01:57:29,New credit,other,false,statechange,missing,Application,0.0,0,0,0.0,0.8812666667,1,3,false,2066574,False
+c_100886157,A_Accepted,other,2016-11-15 02:32:36,New credit,other,false,statechange,missing,Application,0.0,0,0,0.0,4355.10658333,2,4,false,1805267,False
+c_100886157,O_Create_Offer,other,2016-11-15 02:34:48,New credit,other,false,Created,0,Offer,26786.0,120,30000,0.0,2.2123666667,2,5,false,1805135,False
+c_100886157,O_Created,other,2016-11-15 02:34:49,New credit,other,false,statechange,0,Offer,26786.0,120,30000,0.0,0.0112833333,2,6,false,1805134,False
+c_100886157,O_Sent_(mail_and_online),other,2016-11-15 02:34:58,New credit,other,false,statechange,0,Offer,26786.0,120,30000,0.0,0.14195,2,7,false,1805125,False
+c_100886157,W_Complete_application,other,2016-11-15 02:34:58,New credit,other,false,Deleted,0,Workflow,26786.0,120,30000,377.3858,0.0002166667,2,8,false,1805125,False
+c_100886157,A_Complete,other,2016-11-15 02:34:58,New credit,other,false,statechange,0,Application,26786.0,120,30000,0.0,5e-05,2,9,false,1805125,False
+c_100886157,O_Create_Offer,other,2016-11-15 02:37:51,New credit,other,false,Created,other,Offer,33786.0,120,37000,0.0,2.8909666667,2,10,false,1804952,False
+c_100886157,O_Created,other,2016-11-15 02:37:52,New credit,other,false,statechange,other,Offer,33786.0,120,37000,0.0,0.01445,2,11,false,1804951,False
+c_100886157,O_Sent_(mail_and_online),other,2016-11-15 02:38:02,New credit,other,false,statechange,other,Offer,33786.0,120,37000,0.0,0.1726166667,2,12,false,1804941,False
+c_100886157,A_Validating,other,2016-12-02 23:56:01,New credit,other,false,statechange,other,Application,33786.0,120,37000,0.0,25757.9790667,23,13,false,259462,False
+c_100886157,O_Returned,other,2016-12-02 23:56:09,New credit,other,false,statechange,other,Offer,33786.0,120,37000,0.0,0.1315666667,23,14,false,259454,False
+c_100886157,W_Validate_application,other,2016-12-05 22:32:36,New credit,other,false,Deleted,other,Workflow,33786.0,120,37000,4236.58903333,4236.44518333,22,15,false,5267,False
+c_100886157,A_Incomplete,other,2016-12-05 22:32:36,New credit,other,false,statechange,other,Application,33786.0,120,37000,0.0,5e-05,22,16,false,5267,False
+c_100886157,O_Accepted,User_121,2016-12-06 00:00:23,New credit,other,false,statechange,other,Offer,33786.0,120,37000,0.0,87.7921333333,0,17,false,0,False
+c_100886157,A_Pending,User_121,2016-12-06 00:00:23,New credit,other,false,statechange,other,Application,33786.0,120,37000,0.0,3.33333333333e-05,0,18,false,0,False
