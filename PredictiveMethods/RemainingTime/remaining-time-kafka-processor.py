@@ -69,7 +69,7 @@ for message in consumer:
     predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=case_id_col,
                                            cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-    with open('PredictiveMethods/RemainingTime/predictive_monitor_%s.pkl' % dataset, 'rb') as f:
+    with open('PredictiveMethods/pkl/predictive_monitor_%s_remtime.pkl' % dataset, 'rb') as f:
         predictive_monitor.models = cPickle.load(f)
 
     outcome = predictive_monitor.test(test)

@@ -57,5 +57,5 @@ predictive_monitor.train(train)
 
 models = predictive_monitor.models
 
-with open('predictive_monitor_%s_remtime.pkl' % dataset, 'wb') as f:
+with open('../pkl/predictive_monitor_%s_remtime.pkl' % dataset, 'wb') as f:
     cPickle.dump(models, f, protocol=2)

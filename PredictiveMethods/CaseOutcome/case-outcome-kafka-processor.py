@@ -73,7 +73,7 @@ for message in consumer:
                                            label_col=label_col, pos_label=pos_label,
                                            cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-    with open('PredictiveMethods/CaseOutcome/predictive_monitor_%s_%s.pkl' % (dataset,label_col), 'rb') as f:
+    with open('PredictiveMethods/pkl/predictive_monitor_%s_%s.pkl' % (dataset, label_col), 'rb') as f:
         predictive_monitor.models = cPickle.load(f)
 
     outcome = predictive_monitor.test(test);

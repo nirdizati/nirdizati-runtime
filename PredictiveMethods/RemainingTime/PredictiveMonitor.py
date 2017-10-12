@@ -59,5 +59,5 @@ class PredictiveMonitor():
 
         # predict
         predictions_proba = pred_model.predict_proba(dt_test)
-        predictions_proba = np.rint(predictions_proba)
-        return predictions_proba.item()
+        predictions_proba = max(0,np.rint(np.asscalar(predictions_proba))) # if predicted remaining time is negative, then make it zero
+        return predictions_proba
