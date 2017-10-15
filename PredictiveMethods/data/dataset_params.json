@@ -1,0 +1,209 @@
+{
+  "bpi12": {
+    "case_id_col": "case_id",
+    "event_nr_col": "event_nr",
+    "CaseOutcome": {
+      "static_cols": [
+        "AMOUNT_REQ"
+      ],
+      "dynamic_cols": [
+        "proctime",
+        "elapsed",
+        "activity_name",
+        "Resource"
+      ],
+      "cat_cols": [
+        "activity_name",
+        "Resource"
+      ],
+      "label": {
+        "pos_label": "true",
+        "cls_method": "gbm",
+        "n_estimators": 250,
+        "max_features": 0.4,
+        "learning_rate": 0.03
+      }
+    },
+    "RemainingTime": {
+      "static_cols": [
+        "AMOUNT_REQ"
+      ],
+      "dynamic_cols": [
+        "proctime",
+        "elapsed",
+        "activity_name",
+        "Resource",
+        "remtime"
+      ],
+      "cat_cols": [
+        "activity_name",
+        "Resource"
+      ],
+      "cls_method": "gbm",
+      "n_estimators": 240,
+      "max_features": 0.05,
+      "learning_rate": 0.01
+    }
+  },
+
+  "bpi15": {
+    "case_id_col": "case_id",
+    "event_nr_col": "event_nr",
+    "CaseOutcome": {
+      "static_cols": [
+        "Responsible_actor",
+        "SUMleges",
+        "Aanleg",
+        "Bouw",
+        "Brandveilig_melding",
+        "Brandveilig_vergunning",
+        "Handelen_strijd",
+        "Kap",
+        "Milieu_melding",
+        "Milieu_neutraal_wijziging",
+        "Milieu_vergunning",
+        "Monument",
+        "Reclame",
+        "Sloop"
+      ],
+      "dynamic_cols": [
+        "activity_name",
+        "monitoringResource",
+        "question",
+        "Resource",
+        "duration",
+        "hour"
+      ],
+      "cat_cols": [
+        "activity_name",
+        "monitoringResource",
+        "question",
+        "Resource",
+        "Responsible_actor"
+      ],
+      "label": {
+        "pos_label": "true",
+        "cls_method": "gbm",
+        "n_estimators": 50,
+        "max_features": 0.2,
+        "learning_rate": 0.1
+      }
+    },
+    "RemainingTime": {
+      "static_cols": [
+        "Responsible_actor",
+        "SUMleges",
+        "Aanleg",
+        "Bouw",
+        "Brandveilig_melding",
+        "Brandveilig_vergunning",
+        "Handelen_strijd",
+        "Kap",
+        "Milieu_melding",
+        "Milieu_neutraal_wijziging",
+        "Milieu_vergunning",
+        "Monument",
+        "Reclame",
+        "Sloop"
+      ],
+      "dynamic_cols": [
+        "activity_name",
+        "monitoringResource",
+        "question",
+        "Resource",
+        "duration",
+        "hour",
+        "remtime"
+      ],
+      "cat_cols": [
+        "activity_name",
+        "monitoringResource",
+        "question",
+        "Resource",
+        "Responsible_actor"
+      ],
+      "cls_method": "gbm",
+      "n_estimators": 50,
+      "max_features": 0.2,
+      "learning_rate": 0.1
+    }
+  },
+
+  "bpi17": {
+    "case_id_col": "case_id",
+    "event_nr_col": "event_nr",
+    "CaseOutcome": {
+      "static_cols": [
+        "ApplicationType",
+        "LoanGoal"
+      ],
+      "dynamic_cols": [
+        "FirstWithdrawalAmount",
+        "NumberOfTerms",
+        "OfferedAmount",
+        "activity_duration",
+        "activity_name",
+        "Resource",
+        "Action",
+        "CreditScore",
+        "EventOrigin",
+        "hour"
+      ],
+      "cat_cols": [
+        "activity_name",
+        "Resource",
+        "Action",
+        "CreditScore",
+        "EventOrigin",
+        "ApplicationType",
+        "LoanGoal"
+      ],
+      "label": {
+        "pos_label": "true",
+        "cls_method": "gbm",
+        "n_estimators": 50,
+        "max_features": 0.15,
+        "learning_rate": 0.1
+      },
+      "label2": {
+        "pos_label": "true",
+        "cls_method": "gbm",
+        "n_estimators": 40,
+        "max_features": 0.15,
+        "learning_rate": 0.1
+      }
+    },
+    "RemainingTime": {
+      "static_cols": [
+        "ApplicationType",
+        "LoanGoal"
+      ],
+      "dynamic_cols": [
+        "FirstWithdrawalAmount",
+        "NumberOfTerms",
+        "OfferedAmount",
+        "activity_duration",
+        "activity_name",
+        "Resource",
+        "Action",
+        "CreditScore",
+        "EventOrigin",
+        "hour",
+        "remtime"
+      ],
+      "cat_cols": [
+        "activity_name",
+        "Resource",
+        "Action",
+        "CreditScore",
+        "EventOrigin",
+        "ApplicationType",
+        "LoanGoal"
+      ],
+      "cls_method": "gbm",
+      "n_estimators": 80,
+      "max_features": 0.4,
+      "learning_rate": 0.1
+    }
+  }
+}

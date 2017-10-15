@@ -21,12 +21,18 @@ from PredictiveMonitor import PredictiveMonitor
 import pandas as pd
 import sys
 import cPickle
+from tqdm import tqdm, tqdm_pandas
 
-dataset = sys.argv[1]
-label_col = sys.argv[2]
+if len(sys.argv) != 4:
+    sys.exit("Usage: python test_all_cases.py csv-test-file dataset-id label-column-id \n"
+             "Example:python test_all_cases.py test_bpi17.csv bpi17 label")
+
+testSet = sys.argv[1]
+dataset = sys.argv[2]
+label_col = sys.argv[3]
 
 dataset_params = pd.read_json("../data/dataset_params.json", orient="index", typ="series")
-train = pd.read_csv("../data/train_%s.csv" % dataset, dtype={'%s' % label_col: str}, sep=",", encoding="utf-8")
+test = pd.read_csv('%s' % testSet)
 
 case_id_col = dataset_params[dataset][u'case_id_col']
 event_nr_col = dataset_params[dataset][u'event_nr_col']
@@ -57,9 +63,11 @@ predictive_monitor = PredictiveMonitor(event_nr_col=event_nr_col, case_id_col=ca
                                        label_col=label_col, pos_label=pos_label,
                                        cls_method=cls_method, encoder_kwargs=encoder_kwargs, cls_kwargs=cls_kwargs)
 
-predictive_monitor.train(train)
+with open('../pkl/predictive_monitor_%s_%s.pkl' % (dataset,label_col), 'rb') as f:
+    predictive_monitor.models = cPickle.load(f)
 
-models = predictive_monitor.models
-
-with open('../pkl/predictive_monitor_%s_%s.pkl' % (dataset, label_col), 'wb') as f:
-    cPickle.dump(models, f, protocol=2)
+nr_unique_cases = len(test.groupby(case_id_col).nunique()) + 1
+tqdm_pandas(tqdm(range(1, nr_unique_cases)))
+results = test.groupby(case_id_col).progress_apply(predictive_monitor.test)
+res = pd.DataFrame({'case_id':results.index, '%s'%label_col:results.values})
+res.to_csv("results_%s_%s.csv"%(dataset,label_col), index=False)
