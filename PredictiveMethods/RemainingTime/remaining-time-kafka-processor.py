@@ -30,7 +30,7 @@ if len(sys.argv) != 5:
 
 bootstrap_server, events_topic, predictions_topic, dataset = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 
-dataset_params = pd.read_json("../data/dataset_params.json", orient="index", typ="series")
+dataset_params = pd.read_json("PredictiveMethods/data/dataset_params.json", orient="index", typ="series")
 
 consumer = KafkaConsumer(events_topic, group_id='remainingTime({})'.format(dataset), bootstrap_servers=bootstrap_server, auto_offset_reset='earliest')
 producer = KafkaProducer(bootstrap_servers=bootstrap_server)
