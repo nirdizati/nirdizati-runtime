@@ -2,6 +2,7 @@
   "bpi12": {
     "case_id_col": "case_id",
     "event_nr_col": "event_nr",
+    "timestamp_col": "time",
     "CaseOutcome": {
       "static_cols": [
         "AMOUNT_REQ"
@@ -49,6 +50,7 @@
   "bpi15": {
     "case_id_col": "case_id",
     "event_nr_col": "event_nr",
+    "timestamp_col": "time",
     "CaseOutcome": {
       "static_cols": [
         "Responsible_actor",
@@ -132,6 +134,7 @@
   "bpi17": {
     "case_id_col": "case_id",
     "event_nr_col": "event_nr",
+    "timestamp_col": "time",
     "CaseOutcome": {
       "static_cols": [
         "ApplicationType",
@@ -205,5 +208,85 @@
       "max_features": 0.4,
       "learning_rate": 0.1
     }
+  },
+
+    "PurchOrders": {
+      "case_id_col": "Case ID",
+      "event_nr_col": "event_nr",
+      "timestamp_col": "Complete Timestamp",
+      "CaseOutcome": {
+        "static_cols": [
+          "Line_Total_Cost",
+          "PurchOrder_Customer_Type",
+          "Shipping_Type",
+          "PurchOrder_Line_No_",
+          "Shipping_Type",
+          "Supplier_ID"
+        ],
+        "dynamic_cols": [
+          "Activity",
+          "Activity_Type",
+          "elapsed",
+          "Metric_Flag",
+          "Resource",
+          "duration",
+          "weekday",
+          "hour"
+        ],
+        "cat_cols": [
+          "Activity",
+          "Resource",
+          "Activity_Type",
+          "Metric_Flag",
+          "PurchOrder_Customer_Type",
+          "PurchOrder_Line_No_",
+          "Shipping_Type",
+          "Supplier_ID",
+          "weekday"
+        ],
+        "label": {
+          "pos_label": "true",
+          "cls_method": "gbm",
+          "n_estimators": 100,
+          "max_features": 0.4,
+          "learning_rate": 0.05
+        }
+      },
+      "RemainingTime": {
+        "static_cols": [
+          "Line_Total_Cost",
+          "PurchOrder_Customer_Type",
+          "Shipping_Type",
+          "PurchOrder_Line_No_",
+          "Shipping_Type",
+          "Supplier_ID"
+        ],
+        "dynamic_cols": [
+          "Activity",
+          "Activity_Type",
+          "elapsed",
+          "Metric_Flag",
+          "Resource",
+          "duration",
+          "weekday",
+          "hour",
+          "remtime"
+        ],
+        "cat_cols": [
+          "Activity",
+          "Resource",
+          "Activity_Type",
+          "Metric_Flag",
+          "PurchOrder_Customer_Type",
+          "PurchOrder_Line_No_",
+          "Shipping_Type",
+          "Supplier_ID",
+          "weekday"
+        ],
+        "cls_method": "gbm",
+        "n_estimators": 200,
+        "max_features": 0.4,
+        "learning_rate": 0.05
+      }
   }
 }

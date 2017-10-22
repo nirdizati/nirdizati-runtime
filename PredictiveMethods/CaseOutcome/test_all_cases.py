@@ -69,5 +69,5 @@ with open('../pkl/predictive_monitor_%s_%s.pkl' % (dataset,label_col), 'rb') as 
 nr_unique_cases = len(test.groupby(case_id_col).nunique()) + 1
 tqdm_pandas(tqdm(range(1, nr_unique_cases)))
 results = test.groupby(case_id_col).progress_apply(predictive_monitor.test)
-res = pd.DataFrame({'case_id':results.index, '%s'%label_col:results.values})
+res = pd.DataFrame({case_id_col:results.index, '%s'%label_col:results.values})
 res.to_csv("results_%s_%s.csv"%(dataset,label_col), index=False)

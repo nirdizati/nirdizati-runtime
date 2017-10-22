@@ -22,6 +22,7 @@ import sys
 import pandas as pd
 from functools import reduce
 
+
 if len(sys.argv) != 4:
     sys.exit("Usage: python predict_all.py csv-test-file dataset-id label-column-id(s) \n"
              "Example: python predict_all.py test_bpi17.csv bpi17 label,label2")
@@ -29,6 +30,15 @@ if len(sys.argv) != 4:
 testSet = sys.argv[1]
 dataset = sys.argv[2]
 label_cols = sys.argv[3].split(',')
+
+dataset_params = pd.read_json("data/dataset_params.json", orient="index", typ="series")
+case_id_col = dataset_params[dataset][u'case_id_col']
+
+# add necessary columns
+log = pd.read_csv("data/%s" % testSet)
+log['label'] = 0
+log['remtime'] = 0
+log.to_csv("data/%s" % testSet, index=False)
 
 os.chdir("CaseOutcome/")
 print("Started case outcome predictions")
@@ -43,5 +53,5 @@ os.system("python test_all_cases.py ../data/%s %s" % (testSet, dataset))
 df.append(pd.read_csv("results_%s_remtime.csv" % dataset))
 
 os.chdir("../")
-df_merged = reduce(lambda left,right: pd.merge(left,right,on=['case_id'], how='outer'), df)
+df_merged = reduce(lambda left,right: pd.merge(left,right,on=[case_id_col], how='outer'), df)
 df_merged.to_csv("predictions_%s.csv" % dataset, index=False)
