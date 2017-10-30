@@ -34,7 +34,7 @@ test = pd.read_csv('%s' % testSet)
 
 case_id_col = dataset_params[dataset][u'case_id_col']
 event_nr_col = dataset_params[dataset][u'event_nr_col']
-timestamp_col = "time"
+timestamp_col = dataset_params[dataset][u'timestamp_col']
 
 static_cols = dataset_params[dataset][u'RemainingTime'][u'static_cols']
 dynamic_cols = dataset_params[dataset][u'RemainingTime'][u'dynamic_cols']
