@@ -3,7 +3,12 @@
   "app": {
     "port": 8080,
     "clean": true,
-    "replayer": "kafka"
+    "replayer": "http",
+    "session": {
+      "secret": "nirdizati-runtime",
+      "resave": false,
+      "saveUninitialized": false
+    }
   },
 
   "mongoose": {

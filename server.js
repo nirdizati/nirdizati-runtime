@@ -24,16 +24,23 @@ const bodyParser = require('body-parser'),
 	config = require('config'),
 	express = require('express'),
 	http = require('http'),
-	webLogger = require('morgan'),
-	path = require('path');
+	helmet = require('helmet'),
+	path = require('path'),
+	webLogger = require('morgan');
 
 const log = require('./libs/utils/logger.js')(module),
-	routes = require('./routes/index'),
-	sender = require('./libs/utils/sender');
+	sender = require('./libs/utils/sender'),
+	replayerRoutes = require('./routes/replayer'),
+	routes = require('./routes/index');
 
 const app = express();
 
-app.use(favicon(path.join(__dirname, 'public', 'media', 'favicon.ico')));
+// provides some security protection
+app.use(helmet({
+	frameguard: {
+		action: 'deny' // disallow putting site in iframe to prevent clickjacking attack
+	}
+}));
 
 if (app.get('env') === 'development') {
 	app.use(webLogger('dev'));
@@ -41,18 +48,20 @@ if (app.get('env') === 'development') {
 	app.use(webLogger('combined'));
 }
 
+app.use(favicon(path.join(__dirname, 'public', 'media', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
-app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({
 	extended: false
 }));
 
-app.use(['/'], routes);
-app.use(express.static(path.join(__dirname, '/public')));
+// handle routes
+app.use('/event', replayerRoutes);
+app.use('/', routes);
 
-//catch 404 and forward to error handler
+// produce 404 and forward to error handler
 app.use(function(req, res, next) {
-	const err = new Error('Not Found');
+	const err = new Error('There is no such route');
 	err.status = 404;
 	next(err);
 });
@@ -65,8 +74,9 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-const server = http.createServer(app);
-const port = process.argv[2] || config.get('app.port');
+// setup server
+const server = http.createServer(app),
+	port = process.argv[2] || config.get('app.port');
 
 server.listen(port, () => {
 	log.info(`Express server listening on port ${port}`);

@@ -19,34 +19,78 @@ If not, see <http://www.gnu.org/licenses/lgpl.html>.
 
 'use strict';
 
-const path = require('path'),
+const config = require('config'),
+	ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn,
+	LocalStrategy = require('passport-local').Strategy,
+	path = require('path'),
+	passport = require('passport'),
+	session = require("express-session"),
 	router = require('express').Router();
 
-const db = require('../db');
+// just for testing
+const guest = {
+	email: 'guest@nirdizati.com',
+	password: 'nirdizati',
+	id: 1
+};
 
-/* POST handle incoming event */
-router.post('/event', function(req, res) {
-	const auth = req.headers['authorization'];
-	if (!auth || !_valid(auth)) {
-		res.statusCode = 401;
-		return res.end('Valid credentials are needed');
-	}
-
-	db.consumeEvent(req.body, (err) => {
-		if (err) {
-			return res.end('Could not handle incoming event');
+// Configure the local strategy for use by Passport.
+passport.use(new LocalStrategy(
+	{usernameField: 'email'},
+	(email, password, done) => {
+		// let's check credentials for hardcoded user
+		if (guest.email !== email || guest.password !== password) {
+			return done(null, false);
 		}
 
-		return res.json(req.body);
-	});
-});
+		return done(null, guest)
+	})
+);
 
-router.get(['/', '/index.html'], function(req, res) {
-	res.sendFile(path.join(__dirname, '..', 'views', 'index.html'));
-});
+// Configure Passport authenticated session persistence
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.
+passport.serializeUser((user, cb) => cb(null, user.id));
+passport.deserializeUser(
+	(id, cb) => {
+		// TODO implement logic to find user in db by id and return it via cb
 
-function _valid(auth) {
-	return auth === 'replayer:12345';
-}
+		if (id !== guest.id) {
+			return cb(new Error(`User has invalid session data.`))
+		}
+
+		cb(null, guest);
+	}
+);
+
+// Configure session middlewares
+router.use(session(config.get('app.session')));
+router.use(passport.initialize());
+router.use(passport.session());
+
+// Configure application routes
+router.get('/login',
+	(req, res) => {
+		res.sendFile(path.join(__dirname, '..', 'views', 'login.html'));
+	}
+);
+
+router.post('/login',
+	passport.authenticate('local', { successReturnToOrRedirect: '/dashboard', failureRedirect: '/login' })
+);
+
+router.get('/',
+	(req, res) => {
+		res.redirect('/dashboard');
+	}
+);
+
+router.get('/dashboard',
+	ensureLoggedIn(),
+	(req, res) => {
+		res.sendFile(path.join(__dirname, '..', 'views', 'index.html'));
+	}
+);
 
 module.exports = router;

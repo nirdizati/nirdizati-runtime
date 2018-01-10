@@ -1,0 +1,7 @@
+<!-- This prevents any Flash users from loading content off of your site, unless they come from your domain. -->
+
+<?xml version="1.0"?>
+<!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd">
+<cross-domain-policy>
+    <site-control permitted-cross-domain-policies="none"/>
+</cross-domain-policy>
